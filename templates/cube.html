@@ -1,4 +1,3 @@
-
 <style>
     :root {
         --size: 60;
@@ -24,7 +23,6 @@
     .cube td.o {background-color: orange;}
     .cube td.x {background-color: grey;}
 </style>
-
 <h1>Cube app</h1>
 
 <table class='cube'>
@@ -187,27 +185,6 @@
 
 </table>
 
-<h2>Input configuration</h2>
-
-To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>wbogry</code> will be ignored and can therefor ebe used as puntuation to increast readability.
-
-<form action="/cube">
-    <textarea name="cubecode-userinput" id="cubecode_input" cols="30" rows="12">
-    www
-    www
-    www
-bbb|ooo|ggg|rrr
-bbb|ooo|ggg|rrr
-bbb|ooo|ggg|rrr
-    yyy
-    yyy
-    yyy
-    </textarea>
-    <br>
-    <input type="submit" value="Submit">
-</form>
-
-</code>
 
 
 <h2>Moves</h2>
@@ -236,3 +213,56 @@ bbb|ooo|ggg|rrr
     <button> {{ move }} </button>
 </a>
 {% endfor %}
+
+
+
+<h2>Input configuration</h2>
+
+To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>wbogry</code> will be ignored and can therefor ebe used as puntuation to increast readability.
+
+<form action="/cube">
+    <textarea name="cubecode-userinput" id="cubecode-userinput" cols="30" rows="12">
+    www    
+    www
+    www
+bbb|ooo|ggg|rrr    
+bbb|ooo|ggg|rrr
+bbb|ooo|ggg|rrr
+    yyy
+    yyy
+    yyy
+    </textarea>
+    <br>
+    <input type="submit" id="cubecode-userinput-submit" value="Submit">
+</form>    
+
+<span id="results"></span>
+
+</code>
+
+
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+
+<script type=text/javascript>
+    $(function() {
+      $('textarea#cubecode-userinput').on('input', function() {
+        console.log($('textarea#cubecode-userinput').val());
+        $.getJSON(
+            '/_parse-cubecode-userinput',
+            {userinput: $('textarea#cubecode-userinput').val()}, 
+            function(results) {
+                $("span#results").text(results.message);
+                $("input#cubecode-userinput-submit").prop("disabled", !results.valid);
+            }
+        );
+        return false;
+      });
+    });
+  </script>
