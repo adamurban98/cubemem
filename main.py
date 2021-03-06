@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+import os
 
 app = Flask(__name__)
 
@@ -9,7 +10,5 @@ def hello_world():
     return '<pre>'+'<br>'.join(['Hello, World!'] + [f'{k:50}: {v}' for k,v in args.items()])
 
 
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
-
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

@@ -1,18 +1,22 @@
-FROM ubuntu:20.04
+# Use the official lightweight Python image.
+# https://hub.docker.com/_/python
+FROM python:3.9-slim
 
-RUN apt-get update -y && apt-get install -y python3 python3-pip
+# Allow statements and log messages to immediately appear in the Knative logs
+ENV PYTHONUNBUFFERED True
 
-# We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
+# Copy local code to the container image.
+ENV APP_HOME /app
+ENV PORT 8080
+WORKDIR $APP_HOME
+COPY . ./
 
-WORKDIR /app
+# Install production dependencies.
+RUN pip install Flask gunicorn
 
-RUN pip3 install -r requirements.txt
-
-COPY . /app
-
-EXPOSE 8080
-
-ENTRYPOINT [ "python3" ]
-
-CMD [ "app.py" ]
+# Run the web service on container startup. Here we use the gunicorn
+# webserver, with one worker process and 8 threads.
+# For environments with multiple CPU cores, increase the number of workers
+# to be equal to the cores available.
+# Timeout is set to 0 to disable the timeouts of the workers to allow Cloud Run to handle instance scaling.
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
