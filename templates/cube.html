@@ -1,12 +1,19 @@
 {% from 'cubechart.html' import cubechart %}
 
+<a href="/">home</a>
+
 <h1>Cube app</h1>
+
+{% if shuffle %}
+<h2>Shuffle sequence: {{shuffle}}</h2>
+{% endif %}
 
 {{ cubechart(cube=cube,size=30) }}
 
 This cube is {% if cube.solved %} solved {% else %} unsolved {% endif %}.
 
 <button onclick="window.location.href='{{ url_for('solution', cubecode=cube.cubecode) }}';">Solve!</button>
+<button onclick="window.location.href='{{ url_for('shuffle') }}';">Shuffle!</button>
 <br>
 <br>
 
@@ -18,6 +25,8 @@ This cube is {% if cube.solved %} solved {% else %} unsolved {% endif %}.
         height: 1cm;
     }
 </style>
+
+
 
 {% for move in 'UuRrFfLlBbDd' %}
 <a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">

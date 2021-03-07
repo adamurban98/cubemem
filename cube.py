@@ -252,7 +252,7 @@ class Cube:
             else:
                 cube = cube._move(move)
         return cube
-    
+
     def alg_t(self):
         new_colors = copy.deepcopy(self.colors)
         
@@ -339,3 +339,64 @@ class Cube:
     @property
     def solved(self):
         return self.corners_solved and self.edges_solved and self.centers_solved
+
+    @property
+    def unsolved_corner_positions(self):
+        return [p for p in corner_stickers if self.stickers[p] != p]
+
+    @property
+    def unsolved_edge_positions(self):
+        return [p for p in edge_stickers if self.stickers[p] != p]
+
+    @property
+    def text(self):
+        i = 0
+        r = '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        r += '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        r += '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
+        i+=12
+        r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
+        i+=12
+        r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
+        i+=12
+        r += '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        r += '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        r += '    ' + self.cubecode[i:i+3] + '\n'
+        i+=3
+        return r
+    
+    def __eq__(self, other):
+        return self.cubecode == other.cubecode
+    
+    def __hash__(self):
+        return hash(self.cubecode)
+
+    
+
+
+if __name__ == '__main__':
+    print(setup_moves)
+    import string
+    for position in sorted(set(setup_moves.keys()) - set('AER') - set(string.ascii_lowercase)):
+        cube = Cube(cubecode=DEFAULT_CUBECODE)
+        a = cube.setup_moves(position)
+        b = a.undo_setup_moves(position)
+        print(f'Checking position {position}')
+        assert cube == b
+        assert a.stickers['C'] == position 
+    
+    for position in sorted(set(setup_moves.keys()) - set('bm') - set(string.ascii_uppercase)):
+        cube = Cube(cubecode=DEFAULT_CUBECODE)
+        a = cube.setup_moves(position)
+        b = a.undo_setup_moves(position)
+        print(f'Checking position {position}')
+        assert cube == b
+        assert a.stickers['d'] == position 
+    
+    

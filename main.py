@@ -3,6 +3,7 @@ from flask import request, render_template, url_for, session, redirect, jsonify
 from datetime import timedelta
 import random
 from cube import Cube, DEFAULT_CUBECODE
+from solution import Solution
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -16,6 +17,9 @@ def hello_world():
 def cube():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
+
+    if cubecode_userinput:
+        session['shuffle'] = None
     
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
@@ -24,11 +28,20 @@ def cube():
         cube = Cube(cubecode)
         return render_template('cube.html', cube=cube)
 
+@app.route('/shuffle')
+def shuffle():
+    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(8)])
+    session['shuffle'] = shuffle
+    return render_template('cube.html', cube=Cube().moves(shuffle), shuffle=shuffle)
+
+
 
 @app.route('/move')
 def move():    
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
     moves = request.args.get('moves', 'U')
+
+    session['shuffle'] = None
 
     cube = Cube(cubecode).moves(moves)
 
@@ -38,8 +51,10 @@ def move():
 @app.route('/solution')
 def solution():    
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
-
-    return render_template('solution.html', cube=Cube(cubecode))
+    cube = Cube(cubecode)
+    solution = Solution.solve(cube)
+    
+    return render_template('solution.html', solution=solution, zip=zip)
 
 
 @app.route('/_parse-cubecode-userinput')
