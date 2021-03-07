@@ -1,4 +1,5 @@
 import string
+from functools import lru_cache
 
 stickers_by_color = dict(
     w = list('abcdABCD') + ['TOP'],
@@ -106,57 +107,6 @@ def parse_cubecode(cubecode):
     cubecode = [c for c in cubecode if c not in ',.-']
     return dict(zip(simple_sticker_ordering_flat, cubecode))
 
-
-moves_yaml = '''
-U:
-# corner1
-- AB
-- EQ
-- RN
-# corner2
-- BC
-- QM
-- NJ
-# corner3
-- CD
-- MI
-- JF
-# corner4
-- DA
-- IE
-- FR
-# edge a
-- ab
-- qm
-# edge b
-- bc
-- mi
-# edge c
-- cd
-- ie
-# edge d
-- da
-- eq
-L:
-# corner 1
-- EF
-- AI
-- RD
-# corner 2
-- FG
-- IU
-- DL
-# corner 3
-- GH
-- US
-- LZ
-# corner 4
-- HF
-- SA
-- ZR
-
-'''
-
 moves_config = '''
 U: &moves_u 
 - ABCD
@@ -227,16 +177,14 @@ for move, configs in moves_config.items():
     forward_moves[str.upper(move)] = forward_submoves
     reverse_moves[str.lower(move)] = reverse_submoves
 
-
-
 import copy 
-
-#forward_moves = { move: [ tuple(submove) for submove in submoves ] for move,submoves in yaml.load(moves_yaml).items()}
-#reverse_moves = { str.lower(move): [ tuple(submove[::-1]) for submove in submoves ] for move,submoves in yaml.load(moves_yaml).items()}
 
 moves = dict(**forward_moves, **reverse_moves)
 
 DEFAULT_CUBECODE='wwwwwwwwwbbbooogggrrrbbbooogggrrrbbbooogggrrryyyyyyyyy'
+import logging
+
+setup_moves = yaml.load(open('setup_moves.yaml','r').read())
 
 class Cube:
     def __init__(self, cubecode=DEFAULT_CUBECODE):
@@ -248,11 +196,13 @@ class Cube:
         self.cubecode = cubecode
 
     @property
+    @lru_cache
     def colors(self):
         return parse_cubecode(self.cubecode)
 
     @property
-    def strickers(self):
+    @lru_cache
+    def stickers(self):
         stickers = {}
         for piece in edges + corners:
             piece_colors = tuple(self.colors[position] for position in piece)
@@ -262,6 +212,7 @@ class Cube:
                     stickers[position] = piece_colors_to_stickers_dict[self.colors[position]]
             else:
                 print('Piece {piece} could not be parsed')
+    
         return stickers
 
     @staticmethod
@@ -302,3 +253,45 @@ class Cube:
                 cube = cube._move(move)
         return cube
     
+    def alg_y(self):
+        new_colors = copy.deepcopy(self.colors)
+        
+        new_colors['A'] = self.colors['C']
+        new_colors['C'] = self.colors['A']
+
+        new_colors['E'] = self.colors['M']
+        new_colors['M'] = self.colors['E']
+        
+        new_colors['R'] = self.colors['J']
+        new_colors['J'] = self.colors['R']
+
+        new_colors['a'] = self.colors['d']
+        new_colors['d'] = self.colors['a']
+
+        new_colors['q'] = self.colors['e']
+        new_colors['e'] = self.colors['q']
+
+        return Cube(self.colors_to_cubecode(new_colors))
+
+    def setup_moves(self, position):
+        return self.moves(setup_moves[position])
+
+    def undo_setup_moves(self, position):
+        return self.moves(str.swapcase(setup_moves[position][::-1]))
+
+    @property
+    def corners_solved(self):
+        return all([self.stickers[position] == position for position in corner_stickers])
+
+    @property
+    def edges_solved(self):
+        return all([self.stickers[position] == position for position in edge_stickers])
+
+    @property
+    def centers_solved(self):
+        refcube = Cube()
+        return all([refcube.colors[position] == self.colors[position] for position in center_stickers])
+
+    @property
+    def solved(self):
+        return self.corners_solved and self.edges_solved and self.centers_solved

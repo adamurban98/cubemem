@@ -1,224 +1,48 @@
-<style>
-    :root {
-        --size: 60;
-    }
+{% from 'cubechart.html' import cubechart %}
 
-    td.noshow {
-        background-color: white !important;
-        border: solid white  !important;
-    }
-
-    .cube td {
-        background-color: grey;
-        height: var(--size);
-        width: var(--size);
-        border: solid  black 1px;
-    }
-
-    .cube td.r {background-color: red;}
-    .cube td.b {background-color: lightskyblue;}
-    .cube td.w {background-color: white;}
-    .cube td.y {background-color: yellow;}
-    .cube td.g {background-color: green;}
-    .cube td.o {background-color: orange;}
-    .cube td.x {background-color: grey;}
-</style>
 <h1>Cube app</h1>
 
-<table class='cube'>
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
+{{ cubechart(cube=cube,size=30) }}
 
-        <td class="{{cube_color['A']}}"><center>{{cube_label['A']}}</center></td>
-        <td class="{{cube_color['a']}}"><center>{{cube_label['a']}}</center></td>
-        <td class="{{cube_color['B']}}"><center>{{cube_label['B']}}</center></td>
+This cube is {% if cube.solved %} solved {% else %} unsolved {% endif %}.
 
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class="{{cube_color['d']}}"><center>{{cube_label['d']}}</center></td>
-        <td class="{{cube_color['TOP']}}"><center>{{cube_label['TOP']}}</center></td>
-        <td class="{{cube_color['b']}}"><center>{{cube_label['b']}}</center></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class="{{cube_color['D']}}"><center>{{cube_label['D']}}</center></td>
-        <td class="{{cube_color['c']}}"><center>{{cube_label['c']}}</center></td>
-        <td class="{{cube_color['C']}}"><center>{{cube_label['C']}}</center></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-
-
-    <tr>
-        <td class="{{cube_color['E']}}"><center>{{cube_label['E']}}</center></td>
-        <td class="{{cube_color['e']}}"><center>{{cube_label['e']}}</center></td>
-        <td class="{{cube_color['F']}}"><center>{{cube_label['F']}}</center></td>
-
-        <td class="{{cube_color['I']}}"><center>{{cube_label['I']}}</center></td>
-        <td class="{{cube_color['i']}}"><center>{{cube_label['i']}}</center></td>
-        <td class="{{cube_color['J']}}"><center>{{cube_label['J']}}</center></td>
-
-        <td class="{{cube_color['M']}}"><center>{{cube_label['M']}}</center></td>
-        <td class="{{cube_color['m']}}"><center>{{cube_label['m']}}</center></td>
-        <td class="{{cube_color['N']}}"><center>{{cube_label['N']}}</center></td>
-
-        <td class="{{cube_color['Q']}}"><center>{{cube_label['Q']}}</center></td>
-        <td class="{{cube_color['q']}}"><center>{{cube_label['q']}}</center></td>
-        <td class="{{cube_color['R']}}"><center>{{cube_label['R']}}</center></td>
-    </tr>
-    <tr>
-        <td class="{{cube_color['h']}}"><center>{{cube_label['h']}}</center></td>
-        <td class="{{cube_color['LEFT']}}"><center>{{cube_label['LEFT']}}</center></td>
-        <td class="{{cube_color['f']}}"><center>{{cube_label['f']}}</center></td>
-
-        <td class="{{cube_color['l']}}"><center>{{cube_label['l']}}</center></td>
-        <td class="{{cube_color['FRONT']}}"><center>{{cube_label['FRONT']}}</center></td>
-        <td class="{{cube_color['j']}}"><center>{{cube_label['j']}}</center></td>
-
-        <td class="{{cube_color['p']}}"><center>{{cube_label['p']}}</center></td>
-        <td class="{{cube_color['RIGHT']}}"><center>{{cube_label['RIGHT']}}</center></td>
-        <td class="{{cube_color['n']}}"><center>{{cube_label['n']}}</center></td>
-
-        <td class="{{cube_color['t']}}"><center>{{cube_label['t']}}</center></td>
-        <td class="{{cube_color['BACK']}}"><center>{{cube_label['BACK']}}</center></td>
-        <td class="{{cube_color['r']}}"><center>{{cube_label['r']}}</center></td>
-    </tr>
-    <tr>
-        <td class="{{cube_color['H']}}"><center>{{cube_label['H']}}</center></td>
-        <td class="{{cube_color['g']}}"><center>{{cube_label['g']}}</center></td>
-        <td class="{{cube_color['G']}}"><center>{{cube_label['G']}}</center></td>
-
-        <td class="{{cube_color['L']}}"><center>{{cube_label['L']}}</center></td>
-        <td class="{{cube_color['k']}}"><center>{{cube_label['k']}}</center></td>
-        <td class="{{cube_color['K']}}"><center>{{cube_label['K']}}</center></td>
-
-        <td class="{{cube_color['P']}}"><center>{{cube_label['P']}}</center></td>
-        <td class="{{cube_color['o']}}"><center>{{cube_label['o']}}</center></td>
-        <td class="{{cube_color['O']}}"><center>{{cube_label['O']}}</center></td>
-
-        <td class="{{cube_color['T']}}"><center>{{cube_label['T']}}</center></td>
-        <td class="{{cube_color['s']}}"><center>{{cube_label['s']}}</center></td>
-        <td class="{{cube_color['S']}}"><center>{{cube_label['S']}}</center></td>
-    </tr>
-
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class="{{cube_color['U']}}"><center>{{cube_label['U']}}</center></td>
-        <td class="{{cube_color['u']}}"><center>{{cube_label['u']}}</center></td>
-        <td class="{{cube_color['V']}}"><center>{{cube_label['V']}}</center></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class="{{cube_color['z']}}"><center>{{cube_label['z']}}</center></td>
-        <td class="{{cube_color['BOTTOM']}}"><center>{{cube_label['BOTTOM']}}</center></td>
-        <td class="{{cube_color['v']}}"><center>{{cube_label['v']}}</center></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-    <tr>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class="{{cube_color['Z']}}"><center>{{cube_label['Z']}}</center></td>
-        <td class="{{cube_color['x']}}"><center>{{cube_label['x']}}</center></td>
-        <td class="{{cube_color['X']}}"><center>{{cube_label['X']}}</center></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-        <td class='noshow'></td>
-    </tr>
-
-</table>
-
-
+<button onclick="window.location.href='{{ url_for('solution', cubecode=cube.cubecode) }}';">Solve!</button>
+<br>
+<br>
 
 <h2>Moves</h2>
 
 <style>
-    button {
+    button.square {
         width: 1cm;
         height: 1cm;
     }
 </style>
 
 {% for move in 'UuRrFfLlBbDd' %}
-<a href="/move?cubecode={{ cubecode }}&moves={{ move }}">
-    <button> {{ move }} </button>
+<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="square"> {{ move }} </button>
 </a>
 {% endfor %}
 <br height="20">
+<br>
 {% for move in 'MmEeSs' %}
-<a href="/move?cubecode={{ cubecode }}&moves={{ move }}">
-    <button> {{ move }} </button>
+<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="square"> {{ move }} </button>
 </a>
 {% endfor %}
 <br height="20">
+<br>
 {% for move in 'XxYyZz' %}
-<a href="/move?cubecode={{ cubecode }}&moves={{ move }}">
-    <button> {{ move }} </button>
+<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="square"> {{ move }} </button>
 </a>
 {% endfor %}
 
 
+<h2>Text based configuration</h2>
 
-<h2>Input configuration</h2>
-
-To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>wbogry</code> will be ignored and can therefor ebe used as puntuation to increast readability.
+To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>w b o g r y</code> will be ignored and can therefore be used as puntuation to increast readability.
 
 <form action="/cube">
     <textarea name="cubecode-userinput" id="cubecode-userinput" cols="30" rows="12">
@@ -233,7 +57,7 @@ bbb|ooo|ggg|rrr
     yyy
     </textarea>
     <br>
-    <input type="submit" id="cubecode-userinput-submit" value="Submit">
+    <input type="submit" id="cubecode-userinput-submit" value="Upload config">
 </form>    
 
 <span id="results"></span>

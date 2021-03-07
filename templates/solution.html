@@ -1,0 +1,19 @@
+<h1>Solution</h1>
+
+{% from 'cubechart.html' import cubechart %}
+
+{{ cubechart(cube=cube) }}
+
+{{ cubechart(cube=cube.alg_y()) }}
+
+<h2>setup B</h2>
+
+{{ cubechart(cube=cube.setup_moves('B')) }}
+
+<h2>y</h2>
+
+{{ cubechart(cube=cube.setup_moves('B').alg_y()) }}
+
+<h2>undo setup</h2>
+
+{{ cubechart(cube=cube.setup_moves('B').alg_y().undo_setup_moves('B')) }}
