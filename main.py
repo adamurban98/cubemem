@@ -39,7 +39,6 @@ def move():
 
 @app.route('/_parse-cubecode-userinput')
 def _verify_userinput():
-    
     cubecode_userinput = request.args.get('userinput', None)
 
     print(list(request.args.items()))
