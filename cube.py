@@ -253,6 +253,50 @@ class Cube:
                 cube = cube._move(move)
         return cube
     
+    def alg_t(self):
+        new_colors = copy.deepcopy(self.colors)
+        
+        new_colors['B'] = self.colors['C']
+        new_colors['C'] = self.colors['B']
+
+        new_colors['J'] = self.colors['Q']
+        new_colors['Q'] = self.colors['J']
+
+        new_colors['M'] = self.colors['N']
+        new_colors['N'] = self.colors['M']
+
+        new_colors['b'] = self.colors['d']
+        new_colors['d'] = self.colors['b']
+
+        new_colors['e'] = self.colors['m']
+        new_colors['m'] = self.colors['e']
+
+
+        return Cube(self.colors_to_cubecode(new_colors))
+
+
+    def alg_j(self):
+        new_colors = copy.deepcopy(self.colors)
+        
+        new_colors['B'] = self.colors['C']
+        new_colors['C'] = self.colors['B']
+
+        new_colors['J'] = self.colors['Q']
+        new_colors['Q'] = self.colors['J']
+
+        new_colors['M'] = self.colors['N']
+        new_colors['N'] = self.colors['M']
+
+        new_colors['a'] = self.colors['d']
+        new_colors['d'] = self.colors['a']
+
+        new_colors['q'] = self.colors['e']
+        new_colors['e'] = self.colors['q']
+
+
+        return Cube(self.colors_to_cubecode(new_colors))
+
+
     def alg_y(self):
         new_colors = copy.deepcopy(self.colors)
         
