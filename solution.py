@@ -43,7 +43,8 @@ class Solution:
             cube = swapped.undo_setup_moves(buffer_sticker)
         
         solution.parity = len(solution.corner_steps) % 2 == 1
-        cube = cube.alg_j()
+        if solution.parity:
+            cube = cube.alg_j()
 
         # edges
         while not cube.edges_solved:

@@ -11,6 +11,8 @@ app.secret_key = 'adamka'
 
 @app.route('/')
 def hello_world():
+    print(app.static_folder)
+    print(app.static_url_path)
     return redirect(url_for('cube'))
 
 @app.route('/cube')

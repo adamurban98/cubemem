@@ -1,4 +1,4 @@
-<a href="/">home</a>
+{% include 'header.html' %}
 
 <h1>Solution</h1>
 
@@ -8,30 +8,27 @@
 <h2>Shuffle sequence: {{ session['shuffle'] }}</h2>
 {% endif %}
 
-<table>
-    <tr>
-        <td><strong> Corners </strong></td>
-        <td><strong> Parity </strong></td>
-        <td><strong> Edges </strong></td>
-    </tr>
-    <tr>
-        <td>
-        </td>
-        <td>
-            
-        </td>
-        <td>
-        </td>
-    </tr>
-</table>
-<h2>
-    {% for step, dummy in zip(solution.corner_steps, solution.corner_dummy_move ) %}
-    <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
-    {% endfor %}
-    <input type="checkbox" name="" id="" {% if not solution.parity %} disabled {% endif %} >
-    {% for step, dummy in zip(solution.edge_steps, solution.corner_dummy_move ) %}
-    <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
-    {% endfor %}
+<ul>
+    <li>
+        <h2>
+            {% for step, dummy in zip(solution.corner_steps, solution.corner_dummy_move ) %}
+            <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
+            {% endfor %}
+        </h2>
+    </li>
+    <li>
+        <h2>
+            {% if solution.parity %} YES {% else %} NO {% endif %} 
+        </h2>
+    </li>
+    <li>
+        <h2>
+            {% for step, dummy in zip(solution.edge_steps, solution.corner_dummy_move ) %}
+            <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
+            {% endfor %}
+        </h2>
+    </li>
+</ul>
 </h2>
 
 {% for step, cube, dummy in zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
