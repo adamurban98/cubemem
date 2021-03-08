@@ -8,17 +8,32 @@
             background-color: white !important;
             border: solid white  !important;
         }
+        
+        table.cube {
+            width: auto;
+            border-collapse: separate;
+        }
     
         .cube td {
             background-color: grey;
-            height: var(--size);
-            width: var(--size);
-            border: solid  black 1px;
+            height: var(--size) !important;
+            width: var(--size) !important;
+            border: solid var(--border) 1px;
+            padding: 0;
             color: transparent;
         }
 
         .cube td:hover{
             color: black;
+        }
+
+        .cube td center{
+            margin: 0;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
         }
     
         .cube td.r {background-color: red;}

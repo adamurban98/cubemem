@@ -41,6 +41,8 @@ class Solution:
             setup = cube.setup_moves(buffer_sticker)
             swapped = setup.alg_y()
             cube = swapped.undo_setup_moves(buffer_sticker)
+
+        solution.state_after_corners = cube
         
         solution.parity = len(solution.corner_steps) % 2 == 1
         if solution.parity:

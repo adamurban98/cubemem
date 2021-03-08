@@ -2,51 +2,65 @@
 
 <h1>Solution</h1>
 
+
 {% from 'cubechart.html' import cubechart %}
 
-{% if session['shuffle'] %}
-<h2>Shuffle sequence: {{ session['shuffle'] }}</h2>
+{% macro my_cubechart(cube) -%}
+    <center>
+        {{cubechart(cube,30)}}
+    </center>
+{% endmacro %}
+
+{% if shuffle %}
+<h2>Shuffle sequence: {{ shuffle }}</h2>
 {% endif %}
 
 <ul>
     <li>
-        <h2>
+        Corners: 
+        <strong>
             {% for step, dummy in zip(solution.corner_steps, solution.corner_dummy_move ) %}
-            <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
+            <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
             {% endfor %}
-        </h2>
+        </strong>
     </li>
     <li>
-        <h2>
+        Parity:
+        <strong>
             {% if solution.parity %} YES {% else %} NO {% endif %} 
-        </h2>
+        </strong>
     </li>
     <li>
-        <h2>
+        Edges:
+        <strong>
             {% for step, dummy in zip(solution.edge_steps, solution.corner_dummy_move ) %}
-            <span {% if dummy %} color="grey" {% endif %} >{{step}}</span>
+            <span {% if dummy %} style="color: grey" {% endif %} >{{step}}</span>
             {% endfor %}
-        </h2>
+        </strong>
     </li>
 </ul>
 </h2>
-
+<h2>Corners</h2>
 {% for step, cube, dummy in zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
-    {{ cubechart(cube, 30) }}
-    <h2>
-        {{ step }} 
-        {% if dummy %} dummy {% endif %}
-    </h2>
+{{ my_cubechart(cube) }}
+<h3>
+    {{loop.index}}. {{ step }} 
+    {% if dummy %} dummy {% endif %}
+</h3>
 {% endfor %}
+{{my_cubechart(solution.state_after_corners)}}
 
+<hr>
+<h2>Edges</h2>
+{% if solution.parity %} <h3>Perform J parity algorithm</h3> {% endif %}
 
 {% for step, cube, dummy in zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
-    {{ cubechart(cube, 30) }}
-    <h2>
-        {{ step }} 
+    {{ my_cubechart(cube)}}
+    <h3>
+        {{loop.index}}. {{ step }} 
         {% if dummy %} dummy {% endif %}
-    </h2>
+    </h3>
 {% endfor %}
-
-{{ cubechart(solution.finalcube, 30) }}
+{{ my_cubechart(solution.finalcube) }}
+<h2>Solved!</h2>
 

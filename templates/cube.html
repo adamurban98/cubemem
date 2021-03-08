@@ -1,50 +1,57 @@
 {% include 'header.html' %}
 {% from 'cubechart.html' import cubechart %}
 
-
 <h1>Cube app</h1>
 
 {% if shuffle %}
 <h2>Shuffle sequence: {{shuffle}}</h2>
 {% endif %}
 
-{{ cubechart(cube=cube,size=30) }}
-
-This cube is {% if cube.solved %} solved {% else %} unsolved {% endif %}.
+<hr>
+<center>
+    {{ cubechart(cube=cube,size=30) }}
+</center>
+This cube is {% if cube.solved %} solved {% else %} unsolved{% endif %}.
+<hr>
 
 <button onclick="window.location.href='{{ url_for('solution', cubecode=cube.cubecode) }}';">Solve!</button>
 <button onclick="window.location.href='{{ url_for('shuffle') }}';">Shuffle!</button>
-<br>
 <br>
 
 <h2>Moves</h2>
 
 <style>
-    button.square {
-        width: 1cm;
-        height: 1cm;
+    a.squarebutton { 
+        text-decoration: none; 
+    }
+
+    button.squarebutton{
+        width: 5em;
     }
 </style>
 
 
-
-{% for move in 'UuRrFfLlBbDd' %}
-<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
-    <button class="square"> {{ move }} </button>
+{% for move in 'UuRrFf' %}
+<a class="squarebutton" href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="squarebutton"> {{ move }} </button>
 </a>
 {% endfor %}
 <br height="20">
-<br>
+{% for move in 'DdLlBb' %}
+<a class="squarebutton" href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="squarebutton"> {{ move }} </button>
+</a>
+{% endfor %}
+<br height="20">
 {% for move in 'MmEeSs' %}
-<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
-    <button class="square"> {{ move }} </button>
+<a class="squarebutton"  href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="squarebutton"> {{ move }} </button>
 </a>
 {% endfor %}
 <br height="20">
-<br>
 {% for move in 'XxYyZz' %}
-<a href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
-    <button class="square"> {{ move }} </button>
+<a class="squarebutton"  href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+    <button class="squarebutton"> {{ move }} </button>
 </a>
 {% endfor %}
 
@@ -52,9 +59,10 @@ This cube is {% if cube.solved %} solved {% else %} unsolved {% endif %}.
 <h2>Text based configuration</h2>
 
 To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>w b o g r y</code> will be ignored and can therefore be used as puntuation to increast readability.
-
+<br>
+<br>
 <form action="/cube">
-    <textarea name="cubecode-userinput" id="cubecode-userinput" cols="30" rows="12">
+    <textarea style="font-family: monospace;" name="cubecode-userinput" id="cubecode-userinput" rows="10">
     www    
     www
     www
@@ -65,16 +73,9 @@ bbb|ooo|ggg|rrr
     yyy
     yyy
     </textarea>
-    <br>
+    <span id="results"></span>
     <input type="submit" id="cubecode-userinput-submit" value="Upload config">
 </form>    
-
-<span id="results"></span>
-
-</code>
-
-
-
 
 
 <script

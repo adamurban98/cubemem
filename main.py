@@ -4,6 +4,7 @@ from datetime import timedelta
 import random
 from cube import Cube, DEFAULT_CUBECODE
 from solution import Solution
+from moves import s_to_c, c_to_s
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -19,44 +20,51 @@ def hello_world():
 def cube():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
-
-    if cubecode_userinput:
-        session['shuffle'] = None
-    
+ 
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
         return redirect(url_for('cube', cubecode=cubecode))
     else:
+        shuffle = session.get('shuffle', '')
         cube = Cube(cubecode)
-        return render_template('cube.html', cube=cube)
+        return render_template(
+            'cube.html',
+            cube=cube,
+            shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
+        )
 
 @app.route('/shuffle')
 def shuffle():
-    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(8)])
+    n = request.args.get('n', 8, type=int)
+    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(n)])
     session['shuffle'] = shuffle
-    return render_template('cube.html', cube=Cube().moves(shuffle), shuffle=shuffle)
 
-
-
+    return redirect(
+        url_for(
+            'cube',
+            cubecode=Cube().moves(shuffle).cubecode
+            )
+        )
+    
 @app.route('/move')
 def move():    
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
     moves = request.args.get('moves', 'U')
 
-    session['shuffle'] = None
-
     cube = Cube(cubecode).moves(moves)
 
     return redirect(url_for('cube', cubecode=cube.cubecode))
-    return render_template('cube.html', cube=cube)
 
 @app.route('/solution')
 def solution():    
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
     cube = Cube(cubecode)
     solution = Solution.solve(cube)
+
+    shuffle=session.get('shuffle', 'XX')
+    shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
     
-    return render_template('solution.html', solution=solution, zip=zip)
+    return render_template('solution.html', solution=solution, shuffle=shuffle, zip=zip)
 
 
 @app.route('/_parse-cubecode-userinput')
