@@ -24,7 +24,7 @@ class Solution:
 
             if cube.stickers[corner_buffer] in 'AER':
                 print('DUMMY')
-                candidates = list(set(cube.unsolved_corner_positions) - set('AER'))
+                candidates = sorted(list(set(cube.unsolved_corner_positions) - set('AER')))
                 candidates += [corner_buffer] # This is the default choice
                 buffer_sticker = candidates[0] 
                 solution.corner_dummy_move.append(True)
@@ -52,7 +52,7 @@ class Solution:
 
             if cube.stickers[edge_buffer] in 'bm':
                 print('DUMMY')
-                candidates = list(set(cube.unsolved_edge_positions) - set('bm'))
+                candidates = sorted(list(set(cube.unsolved_edge_positions) - set('bm')))
                 candidates += [edge_buffer] # This is the default choice
                 buffer_sticker = candidates[0] 
                 solution.edge_dummy_move.append(True)
