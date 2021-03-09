@@ -281,11 +281,11 @@ class Cube:
         new_colors['B'] = self.colors['C']
         new_colors['C'] = self.colors['B']
 
-        new_colors['J'] = self.colors['Q']
-        new_colors['Q'] = self.colors['J']
+        new_colors['J'] = self.colors['N']
+        new_colors['N'] = self.colors['J']
 
-        new_colors['M'] = self.colors['N']
-        new_colors['N'] = self.colors['M']
+        new_colors['M'] = self.colors['Q']
+        new_colors['Q'] = self.colors['M']
 
         new_colors['a'] = self.colors['d']
         new_colors['d'] = self.colors['a']
