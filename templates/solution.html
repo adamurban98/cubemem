@@ -15,30 +15,32 @@
 <h2>Shuffle sequence: {{ shuffle }}</h2>
 {% endif %}
 
-<ul>
-    <li>
-        Corners: 
-        <strong>
-            {% for step, dummy in g.zip(solution.corner_steps, solution.corner_dummy_move ) %}
-            <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
-            {% endfor %}
-        </strong>
-    </li>
-    <li>
-        Parity:
-        <strong>
-            {% if solution.parity %} YES {% else %} NO {% endif %} 
-        </strong>
-    </li>
-    <li>
-        Edges:
-        <strong>
-            {% for step, dummy in g.zip(solution.edge_steps, solution.corner_dummy_move ) %}
-            <span {% if dummy %} style="color: grey" {% endif %} >{{step}}</span>
-            {% endfor %}
-        </strong>
-    </li>
-</ul>
+
+<table id="solution">
+    <thead>
+        <th>Corners</th>
+        <th>Parity</th>
+        <th>Edges</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {%- for step, dummy in g.zip(solution.corner_steps, solution.corner_dummy_move ) -%}
+                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
+                    {{ loop.cycle("", " - ") }}
+                {% endfor -%}
+            </td>
+            <td>{% if solution.parity %} YES {% else %} NO {% endif %} </td>
+            <td>
+                {%- for step, dummy in g.zip(solution.edge_steps, solution.edge_dummy_move ) -%}
+                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
+                    {{ loop.cycle("", " - ") }}
+                {% endfor -%}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 </h2>
 <h2>Corners</h2>
 {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
