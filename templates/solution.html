@@ -19,7 +19,7 @@
     <li>
         Corners: 
         <strong>
-            {% for step, dummy in zip(solution.corner_steps, solution.corner_dummy_move ) %}
+            {% for step, dummy in g.zip(solution.corner_steps, solution.corner_dummy_move ) %}
             <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
             {% endfor %}
         </strong>
@@ -33,7 +33,7 @@
     <li>
         Edges:
         <strong>
-            {% for step, dummy in zip(solution.edge_steps, solution.corner_dummy_move ) %}
+            {% for step, dummy in g.zip(solution.edge_steps, solution.corner_dummy_move ) %}
             <span {% if dummy %} style="color: grey" {% endif %} >{{step}}</span>
             {% endfor %}
         </strong>
@@ -41,7 +41,7 @@
 </ul>
 </h2>
 <h2>Corners</h2>
-{% for step, cube, dummy in zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
+{% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
 {{ my_cubechart(cube) }}
 <h3>
     {{loop.index}}. {{ step }} 
@@ -54,7 +54,7 @@
 <h2>Edges</h2>
 {% if solution.parity %} <h3>Perform J parity algorithm</h3> {% endif %}
 
-{% for step, cube, dummy in zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
+{% for step, cube, dummy in g.zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
     {{ my_cubechart(cube)}}
     <h3>
         {{loop.index}}. {{ step }} 

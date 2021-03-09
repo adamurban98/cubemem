@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, render_template, url_for, session, redirect, jsonify
+from flask import request, render_template, url_for, session, redirect, jsonify, g
 from datetime import timedelta
 import random
 from cube import Cube, DEFAULT_CUBECODE
@@ -24,6 +24,7 @@ def cube():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
  
+    g.c_to_s=c_to_s
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
         return redirect(url_for('cube', cubecode=cubecode))
@@ -67,7 +68,8 @@ def solution():
     shuffle=session.get('shuffle', 'XX')
     shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
     
-    return render_template('solution.html', solution=solution, shuffle=shuffle, zip=zip)
+    g.zip = zip
+    return render_template('solution.html', solution=solution, shuffle=shuffle)
 
 
 @app.route('/_parse-cubecode-userinput')
