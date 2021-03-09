@@ -3,3 +3,4 @@ dockerfile
 .dockerignore
 __pycache__
 *.cube
+tmp

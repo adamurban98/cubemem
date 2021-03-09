@@ -5,6 +5,7 @@ import random
 from cube import Cube, DEFAULT_CUBECODE
 from solution import Solution
 from moves import s_to_c, c_to_s
+import yaml
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -12,9 +13,11 @@ app.secret_key = 'adamka'
 
 @app.route('/')
 def hello_world():
-    print(app.static_folder)
-    print(app.static_url_path)
     return redirect(url_for('cube'))
+
+@app.route('/mnemonics')
+def mnemonics():
+    return render_template('mnemonics.html', mnemonics=yaml.load(open('mnemonics.yaml').read()))
 
 @app.route('/cube')
 def cube():

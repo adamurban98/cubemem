@@ -1,0 +1,17 @@
+{% include 'header.html' %}
+
+<h1>Mnemonics</h1>
+
+{% for que in mnemonics %}
+
+<h2>{{que}}</h2>
+
+<ul>
+    {% for mnemonic in mnemonics[que] %}
+        <li>
+            {{mnemonic['name']}} <small>{{mnemonic['desc']}}</small>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endfor %}
