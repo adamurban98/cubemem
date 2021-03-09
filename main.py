@@ -35,7 +35,7 @@ def cube():
 
 @app.route('/shuffle')
 def shuffle():
-    n = request.args.get('n', 8, type=int)
+    n = request.args.get('n', random.choice([6,7]), type=int)
     shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(n)])
     session['shuffle'] = shuffle
 
