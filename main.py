@@ -11,6 +11,10 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = 'adamka'
 
+@app.errorhandler(404)
+def error(e):
+    return render_template('error.html')
+
 @app.route('/')
 def hello_world():
     return redirect(url_for('cube'))
