@@ -23,8 +23,13 @@ def mnemonics():
 def cube():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
+    
+    show_3d = request.args.get('show3d', False)
  
     g.c_to_s=c_to_s
+    g.random=random
+    g.str=str
+
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
         return redirect(url_for('cube', cubecode=cubecode))
@@ -34,6 +39,7 @@ def cube():
         return render_template(
             'cube.html',
             cube=cube,
+            show_3d=True,
             shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
         )
 
@@ -65,6 +71,9 @@ def solution():
     cube = Cube(cubecode)
     solution = Solution.solve(cube)
 
+    g.random=random
+    g.str=str
+    
     shuffle=session.get('shuffle', 'XX')
     shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
     

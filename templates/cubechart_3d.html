@@ -1,0 +1,233 @@
+{% macro cubechart_3d(cube) %}
+
+{% set cubeid='cube3d_'+g.str(g.random.randrange(1000000)) %}
+
+<style>
+    * { box-sizing: border-box; }
+
+body { font-family: sans-serif; }
+
+.scene {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #CCC;
+  margin: 80px;
+  perspective: 400px;
+}
+
+.cube {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-100px);
+  transition: transform 1s;
+}
+
+
+.cube.show-front  { transform: translateZ(-100px) rotateY(   0deg); }
+.cube.show-right  { transform: translateZ(-100px) rotateY( -90deg); }
+.cube.show-back   { transform: translateZ(-100px) rotateY(-180deg); }
+.cube.show-left   { transform: translateZ(-100px) rotateY(  90deg); }
+.cube.show-top    { transform: translateZ(-100px) rotateX( -90deg); }
+.cube.show-bottom { transform: translateZ(-100px) rotateX(  90deg); }
+.cube.show-angle0 { transform: translateZ(-100px) rotateX(  -35deg) rotateY(  45deg); }
+.cube.show-angle1 { transform: translateZ(-100px) rotateX(  35deg) rotateY(  -135deg); }
+
+.face {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  line-height: 66.6px;
+  font-size: 33.3px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+
+
+
+.face--front  { transform: rotateY(  0deg) translateZ(100px); }
+.face--right  { transform: rotateY( 90deg) translateZ(100px); }
+.face--back   { transform: rotateY(180deg) translateZ(100px); }
+.face--left   { transform: rotateY(-90deg) translateZ(100px); }
+.face--top    { transform: rotateX(  90deg) translateZ(100px); }
+.face--bottom { transform: rotateX( -90deg) translateZ(100px); }
+
+.cube .sticker.w {background: rgba(255, 255, 255, 0.95);}
+.cube .sticker.b {background: rgba(0, 153, 255,   0.95);}
+.cube .sticker.o {background: rgba(255, 166, 0,   0.95);}
+.cube .sticker.g {background: rgba(115, 255, 0,   0.95);}
+.cube .sticker.r {background: rgba(243, 68, 68,   0.95);}
+.cube .sticker.y {background: rgba(255, 247, 0,   0.95);}
+
+.cube .sticker {
+  position: absolute;
+  border: 2px solid black;
+  line-height: 66.6px;
+  font-size: 33.3px;
+  font-weight: bold;
+  color: transparent;
+  text-align: center;
+  width: 66.6px;
+  height: 66.6px;
+}
+
+
+.sticker:hover{
+  color: white;
+}
+.sticker.w:hover{
+  color: black;
+}
+
+.sticker.y:hover{
+  color: black;
+}
+
+.sticker--x0y0 { transform: translateX(0)        translateY(0     )   ;}
+.sticker--x1y0 { transform: translateX(66.66px)  translateY(0     )   ;}
+.sticker--x2y0 { transform: translateX(133.33px) translateY(0     )   ;}
+.sticker--x0y1 { transform: translateX(0)        translateY(66.6px)   ;}
+.sticker--x1y1 { transform: translateX(66.66px)  translateY(66.6px)   ;}
+.sticker--x2y1 { transform: translateX(133.33px) translateY(66.6px)   ;}
+.sticker--x0y2 { transform: translateX(0)        translateY(133.33px) ;}
+.sticker--x1y2 { transform: translateX(66.66px)  translateY(133.33px) ;}
+.sticker--x2y2 { transform: translateX(133.33px) translateY(133.33px) ;}
+
+label { margin-right: 10px; }
+</style>
+
+<div id="{{cubeid}}">
+
+  <div class="scene">
+    <div class="cube">
+      <div class="face face--top">
+        <div class="sticker sticker--x0y0 {{cube.colors['A']}} "> {{cube.stickers['A']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['a']}} "> {{cube.stickers['a']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['B']}} "> {{cube.stickers['B']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['b']}} "> {{cube.stickers['b']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['C']}} "> {{cube.stickers['C']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['c']}} "> {{cube.stickers['c']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['D']}} "> {{cube.stickers['D']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['d']}} "> {{cube.stickers['d']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['TOP']}} "> {{cube.stickers['TOP']}} </div>
+      </div>
+      
+      <div class="face face--left">
+        <div class="sticker sticker--x0y0 {{cube.colors['E']}} "> {{cube.stickers['E']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['e']}} "> {{cube.stickers['e']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['F']}} "> {{cube.stickers['F']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['f']}} "> {{cube.stickers['f']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['G']}}" > {{cube.stickers['G']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['g']}} "> {{cube.stickers['g']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['H']}} "> {{cube.stickers['H']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['h']}} "> {{cube.stickers['h']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['LEFT']}} "> {{cube.stickers['LEFT']}} </div>
+      </div>
+      
+      <div class="face face--front">      
+        <div class="sticker sticker--x0y0 {{cube.colors['I']}}"> {{cube.stickers['I']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['i']}}"> {{cube.stickers['i']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['J']}}"> {{cube.stickers['J']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['j']}}"> {{cube.stickers['j']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['K']}}"> {{cube.stickers['K']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['k']}}"> {{cube.stickers['k']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['L']}}"> {{cube.stickers['L']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['l']}}"> {{cube.stickers['l']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['FRONT']}}"> {{cube.stickers['TOP']}} </div>
+      </div>
+      
+      <div class="face face--right">      
+        <div class="sticker sticker--x0y0 {{cube.colors['M']}}"> {{cube.stickers['M']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['m']}}"> {{cube.stickers['m']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['N']}}"> {{cube.stickers['N']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['n']}}"> {{cube.stickers['n']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['O']}}"> {{cube.stickers['O']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['o']}}"> {{cube.stickers['o']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['P']}}"> {{cube.stickers['P']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['p']}}"> {{cube.stickers['p']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['RIGHT']}}"> {{cube.stickers['RIGHT']}} </div>
+      </div>
+      
+      <div class="face face--back">      
+        <div class="sticker sticker--x0y0 {{cube.colors['Q']}}"> {{cube.stickers['Q']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['q']}}"> {{cube.stickers['q']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['R']}}"> {{cube.stickers['R']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['r']}}"> {{cube.stickers['r']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['S']}}"> {{cube.stickers['S']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['s']}}"> {{cube.stickers['s']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['T']}}"> {{cube.stickers['T']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['t']}}"> {{cube.stickers['t']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['BACK']}}"> {{cube.stickers['BACK']}} </div>
+      </div>
+      
+      <div class="face face--bottom">      
+        <div class="sticker sticker--x0y0 {{cube.colors['U']}}"> {{cube.stickers['U']}} </div>
+        <div class="sticker sticker--x1y0 {{cube.colors['u']}}"> {{cube.stickers['u']}} </div>
+        <div class="sticker sticker--x2y0 {{cube.colors['V']}}"> {{cube.stickers['V']}} </div>
+        <div class="sticker sticker--x2y1 {{cube.colors['v']}}"> {{cube.stickers['v']}} </div>
+        <div class="sticker sticker--x2y2 {{cube.colors['X']}}"> {{cube.stickers['X']}} </div> 
+        <div class="sticker sticker--x1y2 {{cube.colors['x']}}"> {{cube.stickers['x']}} </div>
+        <div class="sticker sticker--x0y2 {{cube.colors['Z']}}"> {{cube.stickers['Z']}} </div>
+        <div class="sticker sticker--x0y1 {{cube.colors['z']}}"> {{cube.stickers['z']}} </div>
+        <div class="sticker sticker--x1y1 {{cube.colors['BOTTOM']}}"> {{cube.stickers['BOTTOM']}} </div>
+      </div>
+    </div>
+    
+  </div>
+    
+    <p class="radio-group">
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="front"  /> front
+      </label>
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="right" /> right
+      </label>
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="back" /> back
+      </label>
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="left" /> left
+      </label>
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="top" /> top
+      </label>
+      <label>
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="bottom" /> bottom
+      </label>
+      <label>
+        
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="angle0" checked  /> angle0
+      </label>
+      <label>
+        
+        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="angle1" /> angle1
+      </label>
+    </p>
+    
+</div>
+  
+<script>
+  
+function changeSide_{{cubeid}}(){
+    var cube = document.querySelector('#{{cubeid}} .cube');
+    var radioGroup = document.querySelector('#{{cubeid}} .radio-group');
+    var checkedRadio = radioGroup.querySelector(':checked');
+    var showClass = 'show-' + checkedRadio.value;
+    console.log('{{cubeid}}');
+    console.log(cube.classList)
+    cube.classList.remove( 'show-front','show-right','show-back','show-left','show-top','show-bottom','show-angle0','show-angle1')
+    cube.classList.add( showClass );
+    console.log(cube.classList)
+  }
+changeSide_{{cubeid}}();
+  
+var radioGroup_{{cubeid}} = document.querySelector('#{{cubeid}} .radio-group');
+radioGroup_{{cubeid}}.addEventListener( 'change', changeSide_{{cubeid}} );
+
+</script>
+
+{% endmacro %}

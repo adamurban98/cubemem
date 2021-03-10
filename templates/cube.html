@@ -8,9 +8,11 @@
 {% endif %}
 
 <hr>
+
 <center>
-    {{ cubechart(cube=cube,size=30) }}
+    {{ cubechart(cube=cube,size=30, show_3d=show_3d) }}
 </center>
+
 This cube is {% if cube.solved %} solved {% else %} unsolved{% endif %}.
 <hr>
 

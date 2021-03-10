@@ -1,0 +1,206 @@
+{% macro cubechart(cube, size=50) -%}
+    <style>
+        :root {
+            --size: {{size}}px;
+        }
+    
+        td.noshow {
+            background-color: white !important;
+            border: solid white  !important;
+        }
+        
+        table.cube {
+            width: auto;
+            border-collapse: separate;
+        }
+    
+        .cube td {
+            background-color: grey;
+            height: var(--size) !important;
+            width: var(--size) !important;
+            border: solid var(--border) 1px;
+            padding: 0;
+            color: transparent;
+        }
+
+        .cube td:hover{
+            color: black;
+        }
+
+        .cube td center{
+            margin: 0;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    
+        .cube td.r {background-color: red;}
+        .cube td.b {background-color: lightskyblue;}
+        .cube td.w {background-color: white;}
+        .cube td.y {background-color: yellow;}
+        .cube td.g {background-color: green;}
+        .cube td.o {background-color: orange;}
+        .cube td.x {background-color: grey;}
+    </style>  
+    <table class='cube'>
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['A']}}"><center>{{cube.stickers['A']}}</center></td>
+            <td class="{{cube.colors['a']}}"><center>{{cube.stickers['a']}}</center></td>
+            <td class="{{cube.colors['B']}}"><center>{{cube.stickers['B']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['d']}}"><center>{{cube.stickers['d']}}</center></td>
+            <td class="{{cube.colors['TOP']}}"><center>{{cube.stickers['TOP']}}</center></td>
+            <td class="{{cube.colors['b']}}"><center>{{cube.stickers['b']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['D']}}"><center>{{cube.stickers['D']}}</center></td>
+            <td class="{{cube.colors['c']}}"><center>{{cube.stickers['c']}}</center></td>
+            <td class="{{cube.colors['C']}}"><center>{{cube.stickers['C']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+    
+    
+        <tr>
+            <td class="{{cube.colors['E']}}"><center>{{cube.stickers['E']}}</center></td>
+            <td class="{{cube.colors['e']}}"><center>{{cube.stickers['e']}}</center></td>
+            <td class="{{cube.colors['F']}}"><center>{{cube.stickers['F']}}</center></td>
+    
+            <td class="{{cube.colors['I']}}"><center>{{cube.stickers['I']}}</center></td>
+            <td class="{{cube.colors['i']}}"><center>{{cube.stickers['i']}}</center></td>
+            <td class="{{cube.colors['J']}}"><center>{{cube.stickers['J']}}</center></td>
+    
+            <td class="{{cube.colors['M']}}"><center>{{cube.stickers['M']}}</center></td>
+            <td class="{{cube.colors['m']}}"><center>{{cube.stickers['m']}}</center></td>
+            <td class="{{cube.colors['N']}}"><center>{{cube.stickers['N']}}</center></td>
+    
+            <td class="{{cube.colors['Q']}}"><center>{{cube.stickers['Q']}}</center></td>
+            <td class="{{cube.colors['q']}}"><center>{{cube.stickers['q']}}</center></td>
+            <td class="{{cube.colors['R']}}"><center>{{cube.stickers['R']}}</center></td>
+        </tr>
+        <tr>
+            <td class="{{cube.colors['h']}}"><center>{{cube.stickers['h']}}</center></td>
+            <td class="{{cube.colors['LEFT']}}"><center>{{cube.stickers['LEFT']}}</center></td>
+            <td class="{{cube.colors['f']}}"><center>{{cube.stickers['f']}}</center></td>
+    
+            <td class="{{cube.colors['l']}}"><center>{{cube.stickers['l']}}</center></td>
+            <td class="{{cube.colors['FRONT']}}"><center>{{cube.stickers['FRONT']}}</center></td>
+            <td class="{{cube.colors['j']}}"><center>{{cube.stickers['j']}}</center></td>
+    
+            <td class="{{cube.colors['p']}}"><center>{{cube.stickers['p']}}</center></td>
+            <td class="{{cube.colors['RIGHT']}}"><center>{{cube.stickers['RIGHT']}}</center></td>
+            <td class="{{cube.colors['n']}}"><center>{{cube.stickers['n']}}</center></td>
+    
+            <td class="{{cube.colors['t']}}"><center>{{cube.stickers['t']}}</center></td>
+            <td class="{{cube.colors['BACK']}}"><center>{{cube.stickers['BACK']}}</center></td>
+            <td class="{{cube.colors['r']}}"><center>{{cube.stickers['r']}}</center></td>
+        </tr>
+        <tr>
+            <td class="{{cube.colors['H']}}"><center>{{cube.stickers['H']}}</center></td>
+            <td class="{{cube.colors['g']}}"><center>{{cube.stickers['g']}}</center></td>
+            <td class="{{cube.colors['G']}}"><center>{{cube.stickers['G']}}</center></td>
+    
+            <td class="{{cube.colors['L']}}"><center>{{cube.stickers['L']}}</center></td>
+            <td class="{{cube.colors['k']}}"><center>{{cube.stickers['k']}}</center></td>
+            <td class="{{cube.colors['K']}}"><center>{{cube.stickers['K']}}</center></td>
+    
+            <td class="{{cube.colors['P']}}"><center>{{cube.stickers['P']}}</center></td>
+            <td class="{{cube.colors['o']}}"><center>{{cube.stickers['o']}}</center></td>
+            <td class="{{cube.colors['O']}}"><center>{{cube.stickers['O']}}</center></td>
+    
+            <td class="{{cube.colors['T']}}"><center>{{cube.stickers['T']}}</center></td>
+            <td class="{{cube.colors['s']}}"><center>{{cube.stickers['s']}}</center></td>
+            <td class="{{cube.colors['S']}}"><center>{{cube.stickers['S']}}</center></td>
+        </tr>
+    
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['U']}}"><center>{{cube.stickers['U']}}</center></td>
+            <td class="{{cube.colors['u']}}"><center>{{cube.stickers['u']}}</center></td>
+            <td class="{{cube.colors['V']}}"><center>{{cube.stickers['V']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['z']}}"><center>{{cube.stickers['z']}}</center></td>
+            <td class="{{cube.colors['BOTTOM']}}"><center>{{cube.stickers['BOTTOM']}}</center></td>
+            <td class="{{cube.colors['v']}}"><center>{{cube.stickers['v']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+        <tr>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class="{{cube.colors['Z']}}"><center>{{cube.stickers['Z']}}</center></td>
+            <td class="{{cube.colors['x']}}"><center>{{cube.stickers['x']}}</center></td>
+            <td class="{{cube.colors['X']}}"><center>{{cube.stickers['X']}}</center></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+    
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+            <td class='noshow'></td>
+        </tr>
+    
+    </table>
+{%- endmacro %}
