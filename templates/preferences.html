@@ -7,7 +7,6 @@
 
     <p>These preferences are stored in cookies only.</p>
     <h3>Cubechart dimension</h3>
-    {{ session['pref_b_dimension'] }}
     <label for="threeD">3D</label>
     <input type="radio" name="pref_b_dimension" id="threeD" value="True" {% if session['pref_b_dimension'] == True %} checked {% endif %}>
     <label for="twoD">2D</label>
