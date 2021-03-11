@@ -1,16 +1,23 @@
 {% include 'header.html' %}
 
-
 <h1>Preferences</h1>
 
 <form action="/preferences" method="POST">
 
     <p>These preferences are stored in cookies only.</p>
     <h3>Cubechart dimension</h3>
-    <label for="threeD">3D</label>
-    <input type="radio" name="pref_b_dimension" id="threeD" value="True" {% if session['pref_b_dimension'] == True %} checked {% endif %}>
-    <label for="twoD">2D</label>
-    <input type="radio" name="pref_b_dimension" id="twoD" value="False" {% if session['pref_b_dimension'] != True %} checked {% endif %}>
+    <input type="radio" name="pref_b_dimension" value="True" {% if session['pref_b_dimension'] == True %} checked {% endif %}>
+    <label for="threeD">3D</label> /
+    <input type="radio" name="pref_b_dimension" value="False" {% if session['pref_b_dimension'] != True %} checked {% endif %}>
+    <label for="twoD">2D</label> 
+
+    <h3>Show sticker letter</h3>
+    <input type="radio" name="pref_s_showletter" value="dont" {% if session['pref_s_showletter'] == "dont" %} checked {% endif %}> 
+    <label for="">Do not show</label> /
+    <input type="radio" name="pref_s_showletter" value="hover" {% if session['pref_s_showletter'] == "hover" %} checked {% endif %}> 
+    <label for="">Show on hover</label> /
+    <input type="radio" name="pref_s_showletter" value="always" {% if session['pref_s_showletter'] == "always" %} checked {% endif %}>
+    <label for="">Always show</label>
 
     <h3>Number of shuffle moves</h3>
     <p>A number of moves will be randomly selected from the range so as to generate shuffles which require and not require parity corrections evenly.</p>

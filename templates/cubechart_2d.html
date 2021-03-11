@@ -23,9 +23,25 @@
             color: transparent;
         }
 
-        .cube td:hover{
-            color: black;
+        .sticker{
+        color: transparent;
         }
+        
+        {% if session['pref_s_showletter'] == 'dont' %}
+        
+        {% elif session['pref_s_showletter'] == 'always' %}
+        
+        .cube td{
+        color: black;
+        }
+        
+        {% else %}
+
+        .cube td:hover{
+        color: black;
+        }
+
+        {% endif %}
 
         .cube td center{
             margin: 0;

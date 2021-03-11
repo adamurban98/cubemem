@@ -5,7 +5,6 @@
 <style>
     * { box-sizing: border-box; }
 
-body { font-family: sans-serif; }
 
 .scene {
   width: 210px;
@@ -23,18 +22,6 @@ body { font-family: sans-serif; }
   transform: translateZ(-105px);
   transition: transform 1s;
 }
-
-
-.cube.show-front  { transform: translateZ(-105px) rotateY(   0deg); }
-.cube.show-right  { transform: translateZ(-105px) rotateY( -90deg); }
-.cube.show-back   { transform: translateZ(-105px) rotateY(-180deg); }
-.cube.show-left   { transform: translateZ(-105px) rotateY(  90deg); }
-.cube.show-top    { transform: translateZ(-105px) rotateX( -90deg); }
-.cube.show-bottom { transform: translateZ(-105px) rotateX(  90deg); }
-.cube.show-angle0 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  45deg); }
-.cube.show-angle1 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  -135deg); }
-
-
 
 .cube.show-d0 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  -45deg)   ; }
 .cube.show-d1 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  -135deg)  ; }
@@ -57,9 +44,6 @@ body { font-family: sans-serif; }
   text-align: center;
 }
 
-
-
-
 .face--front  { transform: rotateY(  0deg) translateZ(105px); }
 .face--right  { transform: rotateY( 90deg) translateZ(105px); }
 .face--back   { transform: rotateY(180deg) translateZ(105px); }
@@ -81,12 +65,32 @@ body { font-family: sans-serif; }
   line-height: 70px;
   font-size: 30px;
   font-weight: bold;
-  color: transparent;
   text-align: center;
   width: 70px;
   height: 70px;
 }
 
+
+
+.sticker{
+  color: transparent;
+}
+
+{% if session['pref_s_showletter'] == 'dont' %}
+
+{% elif session['pref_s_showletter'] == 'always' %}
+
+.sticker{
+  color: white;
+}
+.sticker.w{
+  color: black;
+}
+.sticker.y{
+  color: black;
+}
+
+{% else %}
 
 .sticker:hover{
   color: white;
@@ -94,10 +98,11 @@ body { font-family: sans-serif; }
 .sticker.w:hover{
   color: black;
 }
-
 .sticker.y:hover{
   color: black;
 }
+
+{% endif %}
 
 .sticker--x0y0 { transform: translateX(0)         translateY(0     )   ;}
 .sticker--x1y0 { transform: translateX(70px)      translateY(0     )   ;}
