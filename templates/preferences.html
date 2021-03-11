@@ -7,13 +7,14 @@
 
     <p>These preferences are stored in cookies only.</p>
     <h3>Cubechart dimension</h3>
+    {{ session['pref_b_dimension'] }}
     <label for="threeD">3D</label>
-    <input type="radio" name="pref_s_dimension" id="threeD" value="threeD" {% if session['pref_s_dimension']=='threeD' %} checked {% endif %}>
+    <input type="radio" name="pref_b_dimension" id="threeD" value="True" {% if session['pref_b_dimension'] == True %} checked {% endif %}>
     <label for="twoD">2D</label>
-    <input type="radio" name="pref_s_dimension" id="twoD" value="twoD" {% if session['pref_s_dimension']=='twoD' %} checked {% endif %}>
+    <input type="radio" name="pref_b_dimension" id="twoD" value="False" {% if session['pref_b_dimension'] != True %} checked {% endif %}>
 
-    <h3>Number of shubechart shuffle moves</h3>
-    <p>A parity number of moves will be randomly selected from the range so as to generate shuffles which require and not require in parity corrections evenly.</p>
+    <h3>Number of shuffle moves</h3>
+    <p>A number of moves will be randomly selected from the range so as to generate shuffles which require and not require parity corrections evenly.</p>
     
     <select name="pref_i_shufflen" id="pref_i_shufflen">
         <option value="6"  {% if session['pref_i_shufflen'] == 6  %} selected {% endif %}>6-7</option>
@@ -25,3 +26,5 @@
     
     <input type="submit" value="Submit">
 </form>
+
+{% include 'footer.html' %}

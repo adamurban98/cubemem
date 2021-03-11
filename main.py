@@ -28,6 +28,13 @@ def preferences():
                 session[k] = v
             elif k.startswith('pref_i_'):
                 session[k] = int(v)
+            elif k.startswith('pref_b_'):
+                session[k] = v not in ['False', '0', 'false']
+
+    
+    next_page = request.args.get('next', False)
+    if next_page:
+        return redirect(next_page)
 
     return render_template('preferences.html')
 
