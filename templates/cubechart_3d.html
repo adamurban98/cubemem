@@ -34,6 +34,17 @@ body { font-family: sans-serif; }
 .cube.show-angle0 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  45deg); }
 .cube.show-angle1 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  -135deg); }
 
+
+
+.cube.show-d0 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  -45deg)   ; }
+.cube.show-d1 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  -135deg)  ; }
+.cube.show-d2 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  135deg)   ; }
+.cube.show-d3 { transform: translateZ(-105px) rotateX(  45deg) rotateY(  45deg)    ; }
+.cube.show-u0 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  -45deg)   ; }
+.cube.show-u1 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  -135deg)  ; }
+.cube.show-u2 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  135deg)   ; }
+.cube.show-u3 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  45deg)    ; }
+
 .face {
   position: absolute;
   width: 210px;
@@ -104,7 +115,7 @@ label { margin-right: 10px; }
 <div id="{{cubeid}}">
 
   <div class="scene">
-    <div class="cube">
+    <div class="cube show-u3">
       <div class="face face--top">
         <div class="sticker sticker--x0y0 {{cube.colors['A']}} "> {{cube.stickers['A']}} </div>
         <div class="sticker sticker--x1y0 {{cube.colors['a']}} "> {{cube.stickers['a']}} </div>
@@ -179,55 +190,51 @@ label { margin-right: 10px; }
     </div>
     
   </div>
-    
-    <p class="radio-group">
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="front"  /> front
-      </label>
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="right" /> right
-      </label>
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="back" /> back
-      </label>
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="left" /> left
-      </label>
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="top" /> top
-      </label>
-      <label>
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="bottom" /> bottom
-      </label>
-      <label>
-        
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="angle0" checked  /> TLF view
-      </label>
-      <label>
-        
-        <input type="radio" name="rotate-cube-side-{{cubeid}}" value="angle1" /> RBD view
-      </label>
-    </p>
-    
+
+  <button onclick="hangle_{{cubeid}}=(hangle_{{cubeid}}-1+4)%4;changeSide_{{cubeid}}()">←</button>
+  <button onclick="hangle_{{cubeid}}=(hangle_{{cubeid}}+1)%4;changeSide_{{cubeid}}()">→</button>
+  <button onclick="vangle_{{cubeid}}='u';changeSide_{{cubeid}}()">↑</button>
+  <button onclick="vangle_{{cubeid}}='d';changeSide_{{cubeid}}()">↓</button>
 </div>
   
 <script>
-  
+
+hangle_{{cubeid}} = 3
+vangle_{{cubeid}} = 'u'
+
+console.log('show-' + vangle_{{cubeid}} + String(hangle_{{cubeid}}))
+
 function changeSide_{{cubeid}}(){
-    var cube = document.querySelector('#{{cubeid}} .cube');
-    var radioGroup = document.querySelector('#{{cubeid}} .radio-group');
-    var checkedRadio = radioGroup.querySelector(':checked');
-    var showClass = 'show-' + checkedRadio.value;
-    console.log('{{cubeid}}');
-    console.log(cube.classList)
-    cube.classList.remove( 'show-front','show-right','show-back','show-left','show-top','show-bottom','show-angle0','show-angle1')
-    cube.classList.add( showClass );
-    console.log(cube.classList)
-  }
-changeSide_{{cubeid}}();
-  
-var radioGroup_{{cubeid}} = document.querySelector('#{{cubeid}} .radio-group');
-radioGroup_{{cubeid}}.addEventListener( 'change', changeSide_{{cubeid}} );
+  var cube = document.querySelector('#{{cubeid}} .cube');
+  cube.classList.remove( 
+    'show-u0',
+    'show-u1',
+    'show-u3',
+    'show-u2',
+    'show-d0',
+    'show-d1',
+    'show-d2',
+    'show-d3',
+  )
+  cube.classList.add('show-' + vangle_{{cubeid}} + String(hangle_{{cubeid}}))
+
+}
+
+// function changeSide_{{cubeid}}(){
+//     var cube = document.querySelector('#{{cubeid}} .cube');
+//     var radioGroup = document.querySelector('#{{cubeid}} .radio-group');
+//     var checkedRadio = radioGroup.querySelector(':checked');
+//     var showClass = 'show-' + checkedRadio.value;
+//     console.log('{{cubeid}}');
+//     console.log(cube.classList)
+//     cube.classList.remove( 'show-front','show-right','show-back','show-left','show-top','show-bottom','show-angle0','show-angle1')
+//     cube.classList.add( showClass );
+//     console.log(cube.classList)
+//   }
+// changeSide_{{cubeid}}();
+//   
+// var radioGroup_{{cubeid}} = document.querySelector('#{{cubeid}} .radio-group');
+// radioGroup_{{cubeid}}.addEventListener( 'change', changeSide_{{cubeid}} );
 
 </script>
 

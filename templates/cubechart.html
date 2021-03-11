@@ -2,11 +2,9 @@
 {% from 'cubechart_2d.html' import cubechart as cubechart_2d %}
 
 {% macro cubechart(cube, size, show_3d) -%}
-    {% if show_3d %}
+    {% if session['preference_dimension'] == 'threeD' %}
         {{ cubechart_3d(cube=cube) }}
     {% else %}
-        {{ cubechart_3d(cube=cube) }}
-
-        <!-- {{ cubechart_2d(cube=cube,size=30) }} -->
+        {{ cubechart_2d(cube=cube, size=30) }}
     {% endif %}
 {% endmacro %}

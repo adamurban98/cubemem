@@ -1,0 +1,14 @@
+{% include 'header.html' %}
+
+
+<h1>Preferences</h1>
+
+<form action="/preferences" method="POST">
+    <label for="threeD">3D</label>
+    <input type="radio" name="dimension" id="threeD" value="threeD" {% if session['preference_dimension']=='threeD' %} checked {% endif %}>
+    <label for="twoD">2D</label>
+    <input type="radio" name="dimension" id="twoD" value="twoD" {% if session['preference_dimension']=='twoD' %} checked {% endif %}>
+
+    
+    <input type="submit" value="Submit">
+</form>

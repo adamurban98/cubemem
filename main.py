@@ -19,6 +19,16 @@ def error(e):
 def hello_world():
     return redirect(url_for('cube'))
 
+
+@app.route('/preferences', methods=['GET', 'POST'])
+def preferences():
+    print(dict(request.form))
+    if request.method == 'POST':
+        session['preference_dimension'] = request.form['dimension']
+
+    return render_template('preferences.html')
+
+
 @app.route('/mnemonics')
 def mnemonics():
     return render_template('mnemonics.html', mnemonics=yaml.load(open('mnemonics.yaml').read()))
