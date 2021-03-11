@@ -7,11 +7,16 @@ from solution import Solution
 from moves import s_to_c, c_to_s
 import yaml
 import logging
+from git_head_hash import git_head_hash
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = 'adamka'
 app.logger.setLevel(logging.INFO)
+
+@app.before_request
+def before_request_general():
+    g.git_head_hash = git_head_hash
 
 @app.errorhandler(404)
 def error(e):
