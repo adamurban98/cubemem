@@ -1,0 +1,13 @@
+<h3>Color</h3>
+<div style="width: 100%; overflow:auto;">
+    {% for face in 'top,left,front,right,back,bottom'.split(',') %}
+    <div style="float:left; display: block;">
+        <label for="head">{{ face.capitalize() }}</label>
+        <input style="height:60px; width:60px;" type="color" id="pref_s_color_{{face}}" name="pref_s_color_{{face}}" value="{{ session['pref_s_color_' + face ] }}">
+    </div>    
+    {% endfor %}
+</div>
+<br>
+<div style="float:none;">
+    <input type="submit" value="Submit">
+</div>
