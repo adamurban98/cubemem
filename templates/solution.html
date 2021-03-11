@@ -1,6 +1,6 @@
 {% include 'header.html' %}
 
-<h1>Solution</h1>
+<h1>Blindfolded solution</h1>
 
 
 {% from 'cubechart.html' import cubechart %}
@@ -41,7 +41,6 @@
     </tbody>
 </table>
 
-</h2>
 <h2>Corners</h2>
 {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
 {{ my_cubechart(cube) }}
