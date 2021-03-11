@@ -22,9 +22,12 @@ def hello_world():
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
-    print(dict(request.form))
     if request.method == 'POST':
-        session['preference_dimension'] = request.form['dimension']
+        for k, v in request.form.items():
+            if k.startswith('pref_s_'):
+                session[k] = v
+            elif k.startswith('pref_i_'):
+                session[k] = int(v)
 
     return render_template('preferences.html')
 
@@ -59,8 +62,9 @@ def cube():
 
 @app.route('/shuffle')
 def shuffle():
-    n = request.args.get('n', random.choice([6,7]), type=int)
-    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(n)])
+    n = request.args.get('n', 6, type=int)
+    n = session.get('pref_i_shufflen', n)
+    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(random.choice([n,n+1]))])
     session['shuffle'] = shuffle
 
     return redirect(
