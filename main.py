@@ -6,10 +6,12 @@ from cube import Cube, DEFAULT_CUBECODE
 from solution import Solution
 from moves import s_to_c, c_to_s
 import yaml
+import logging
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = 'adamka'
+app.logger.setLevel(logging.INFO)
 
 @app.errorhandler(404)
 def error(e):
@@ -24,12 +26,13 @@ def hello_world():
 def preferences():
     if request.method == 'POST':
         for k, v in request.form.items():
-            if k.startswith('pref_s_'):
-                session[k] = v
-            elif k.startswith('pref_i_'):
-                session[k] = int(v)
+            processed_v = v
+            if k.startswith('pref_i_'):
+                processed_v = int(v)
             elif k.startswith('pref_b_'):
-                session[k] = v not in ['False', '0', 'false']
+                processed_v = v not in ['False', '0', 'false']
+            session[k] = processed_v
+            app.logger.info(f"Preference {k:30} set to {processed_v}")
 
     
     next_page = request.args.get('next', False)
@@ -38,10 +41,11 @@ def preferences():
 
     return render_template('preferences.html')
 
+mnemonics_data = yaml.load(open('mnemonics.yaml').read())
 
 @app.route('/mnemonics')
 def mnemonics():
-    return render_template('mnemonics.html', mnemonics=yaml.load(open('mnemonics.yaml').read()))
+    return render_template('mnemonics.html', mnemonics=mnemonics_data)
 
 @app.route('/cube')
 def cube():
