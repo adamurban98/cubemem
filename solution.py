@@ -4,6 +4,8 @@ from collections import OrderedDict, namedtuple
 from pprint import pprint as pp
 
 class Solution:
+
+
     @staticmethod
     def solve(cube, corner_buffer='A', edge_buffer='b'):
         solution = Solution()
@@ -79,6 +81,22 @@ class Solution:
         
         return solution
 
+    def _mnemonics_pair_helper(self, step_sequence):
+        l = len(step_sequence) 
+        for i in range( l//2 ):
+            yield step_sequence[ i*2 ] + step_sequence[ i*2+1 ]
+
+        if l % 2 == 1:
+            yield step_sequence[ -1 ]
+
+    @property
+    def corner_mnemonic_pair_ques(self):
+        return self._mnemonics_pair_helper(self.corner_steps)
+
+    @property
+    def edge_mnemonic_pair_ques(self):
+        return self._mnemonics_pair_helper(self.edge_steps)
+    
 
 if __name__ == '__main__':
     cube = Cube().moves('B')

@@ -23,10 +23,10 @@
   transition: transform 1s;
 }
 
-.cube.show-d0 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  -45deg)   ; }
-.cube.show-d1 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  -135deg)  ; }
-.cube.show-d2 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  135deg)   ; }
-.cube.show-d3 { transform: translateZ(-105px) rotateX(  35deg) rotateY(  45deg)    ; }
+.cube.show-d0 { transform: translateZ(-105px) rotateX(   35deg) rotateY(  -45deg)   ; }
+.cube.show-d1 { transform: translateZ(-105px) rotateX(   35deg) rotateY(  -135deg)  ; }
+.cube.show-d2 { transform: translateZ(-105px) rotateX(   35deg) rotateY(  135deg)   ; }
+.cube.show-d3 { transform: translateZ(-105px) rotateX(   35deg) rotateY(  45deg)    ; }
 .cube.show-u0 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  -45deg)   ; }
 .cube.show-u1 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  -135deg)  ; }
 .cube.show-u2 { transform: translateZ(-105px) rotateX(  -35deg) rotateY(  135deg)   ; }
@@ -44,19 +44,19 @@
   text-align: center;
 }
 
-.face--front  { transform: rotateY(  0deg) translateZ(105px); }
-.face--right  { transform: rotateY( 90deg) translateZ(105px); }
-.face--back   { transform: rotateY(180deg) translateZ(105px); }
-.face--left   { transform: rotateY(-90deg) translateZ(105px); }
+.face--front  { transform: rotateY(   0deg) translateZ(105px); }
+.face--right  { transform: rotateY(  90deg) translateZ(105px); }
+.face--back   { transform: rotateY( 180deg) translateZ(105px); }
+.face--left   { transform: rotateY( -90deg) translateZ(105px); }
 .face--top    { transform: rotateX(  90deg) translateZ(105px); }
 .face--bottom { transform: rotateX( -90deg) translateZ(105px); }
 
-.cube .sticker.w {background: rgba(255, 255, 255, 0.95);}
-.cube .sticker.b {background: rgba(0, 153, 255,   0.95);}
-.cube .sticker.o {background: rgba(255, 166, 0,   0.95);}
-.cube .sticker.g {background: rgba(115, 255, 0,   0.95);}
-.cube .sticker.r {background: rgba(243, 68, 68,   0.95);}
-.cube .sticker.y {background: rgba(255, 247, 0,   0.95);}
+.cube .sticker.w {background: rgba(255, 255, 255, {{ session['pref_f_transparency'] }});}
+.cube .sticker.b {background: rgba(0, 153, 255,   {{ session['pref_f_transparency'] }});}
+.cube .sticker.o {background: rgba(255, 166, 0,   {{ session['pref_f_transparency'] }});}
+.cube .sticker.g {background: rgba(115, 255, 0,   {{ session['pref_f_transparency'] }});}
+.cube .sticker.r {background: rgba(243, 68, 68,   {{ session['pref_f_transparency'] }});}
+.cube .sticker.y {background: rgba(255, 247, 0,   {{ session['pref_f_transparency'] }});}
 
 .cube .sticker {
   box-sizing: border-box;

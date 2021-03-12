@@ -41,8 +41,36 @@
     </tbody>
 </table>
 
-<h2>Corners</h2>
-{% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
+
+<details> 
+    <summary>Mnemonics</summary>
+    
+    <ul>
+        <li>
+            Corners:
+            <ul>
+                {%- for que in solution.corner_mnemonic_pair_ques  -%}
+                <li>
+                    <span> {{ que }}: &#09; {{ g.get_mnemonic(que) }}</span>
+                </li>
+                {% endfor -%}
+            </ul>
+        </li>
+        <li>
+            Edges:
+            <ul>
+                {%- for que in solution.edge_mnemonic_pair_ques  -%}
+                <li>
+                    <span> {{ que }}: &#09; {{ g.get_mnemonic(que) }}</span>
+                </li>
+                {% endfor -%}
+            </ul>
+        </li>
+    </ul>
+</details>
+    
+    <h2>Corners</h2>
+    {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
 {{ my_cubechart(cube) }}
 <h3>
     {{loop.index}}. {{ step }} 
