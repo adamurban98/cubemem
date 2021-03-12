@@ -7,6 +7,7 @@ from solution import Solution
 from moves import s_to_c, c_to_s
 import yaml
 import logging
+from collections import defaultdict
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -29,6 +30,8 @@ def preferences():
             processed_v = v
             if k.startswith('pref_i_'):
                 processed_v = int(v)
+            elif k.startswith('pref_f_'):
+                processed_v = float(v)
             elif k.startswith('pref_b_'):
                 processed_v = v not in ['False', '0', 'false']
             session[k] = processed_v
@@ -100,8 +103,18 @@ def solution():
     cube = Cube(cubecode)
     solution = Solution.solve(cube)
 
-    g.random=random
-    g.str=str
+    def get_mnemonic(que):
+        que_lower = que.lower()
+        mnemonic = mnemonics_data.get(que_lower, [{'name': que}])
+
+        if mnemonic == []:
+            mnemonic = [{'name': que}]
+
+        return mnemonic[0]['name'] 
+
+    g.get_mnemonic = get_mnemonic
+    g.random = random
+    g.str = str
     
     shuffle=session.get('shuffle', 'XX')
     shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
