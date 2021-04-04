@@ -2,5 +2,5 @@
 
 # Cubemem
 
-To test: `pytest`
-To see coverage: `coverage run --omit='test_*.py' -m  pytest && coverage report`
+- To test: `pytest`
+- To see coverage: `coverage run --omit='test_*.py' -m  pytest && coverage report`
