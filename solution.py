@@ -1,7 +1,6 @@
 from cube import Cube, corner_stickers, corner_stickers, lt_sticker_to_color
 from flask import url_for
 from collections import OrderedDict, namedtuple
-from pprint import pprint as pp
 
 class Solution:
 
@@ -15,17 +14,12 @@ class Solution:
         solution.edge_steps = []
         solution.edge_states = []
         solution.edge_dummy_move = []
-        pp({ p: (cube.stickers[p], p, cube.stickers[p]==p ) for p in corner_stickers })
 
         # corners
         while not cube.corners_solved:
-            pp({ p: (cube.stickers[p], p, cube.stickers[p]==p ) for p in corner_stickers })
             buffer_sticker = cube.stickers[corner_buffer] 
-            print(cube.text)
-            print(f'buffer sticker {buffer_sticker}')
 
             if cube.stickers[corner_buffer] in 'AER':
-                print('DUMMY')
                 candidates = sorted(list(set(cube.unsolved_corner_positions) - set('AER')))
                 candidates += [corner_buffer] # This is the default choice
                 buffer_sticker = candidates[0] 
@@ -55,7 +49,6 @@ class Solution:
             buffer_sticker = cube.stickers[edge_buffer] 
 
             if cube.stickers[edge_buffer] in 'bm':
-                print('DUMMY')
                 candidates = sorted(list(set(cube.unsolved_edge_positions) - set('bm')))
                 candidates += [edge_buffer] # This is the default choice
                 buffer_sticker = candidates[0] 
@@ -77,8 +70,6 @@ class Solution:
 
         solution.finalcube = cube
 
-        print(cube.text)
-        
         return solution
 
     def _mnemonics_pair_helper(self, step_sequence):
