@@ -13,7 +13,7 @@
     {{ cubechart(cube=cube,size=30, show_3d=show_3d) }}
 </center>
 
-This cube is {% if cube.solved %} solved {% else %} unsolved{% endif %}.
+This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 <hr>
 
 <button onclick="window.location.href='{{ url_for('solution', cubecode=cube.cubecode) }}';">Solve!</button>
