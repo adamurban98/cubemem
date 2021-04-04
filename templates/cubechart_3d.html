@@ -76,9 +76,9 @@
   color: transparent;
 }
 
-{% if session['pref_s_showletter'] == 'dont' %}
+{% if g.get_pref('pref_s_showletter') == 'dont' %}
 
-{% elif session['pref_s_showletter'] == 'always' %}
+{% elif g.get_pref('pref_s_showletter') == 'always' %}
 
 .sticker{
   color: white;

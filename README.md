@@ -2,11 +2,13 @@
 
 # Cubemem
 
-# Todo
+## Todo
 - [ ] shuffle records moves
-- [ ] default preferences
+- [x] default preferences
 - [ ] gracefull fail on cubecodes with mistakes
 - [ ] write howto
 
+
+## Testing
 - To test: `pytest`
 - To see coverage: `coverage run --omit='test_*.py' -m  pytest && coverage report`

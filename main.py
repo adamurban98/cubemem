@@ -23,6 +23,26 @@ def hello_world():
     return redirect(url_for('cube'))
 
 
+@app.before_request
+def register_get_pref():
+    
+    defaults = dict(
+        pref_b_dimension = True,
+        pref_s_showletter = 'hover',
+        pref_i_shufflen = 10,
+    )
+    
+    def get_pref(key):
+        if key in session:
+            return session[key]
+        elif key in defaults:
+            return defaults[key]
+        else:
+            KeyError(key)
+
+    g.get_pref = get_pref
+        
+
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
     if request.method == 'POST':
@@ -76,8 +96,7 @@ def cube():
 
 @app.route('/shuffle')
 def shuffle():
-    n = request.args.get('n', 6, type=int)
-    n = session.get('pref_i_shufflen', n)
+    n = g.get_pref('pref_i_shufflen')
     shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(random.choice([n,n+1]))])
     session['shuffle'] = shuffle
 

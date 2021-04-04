@@ -6,27 +6,27 @@
 
     <p>These preferences are stored in cookies only.</p>
     <h3>Cubechart dimension</h3>
-    <input type="radio" name="pref_b_dimension" value="True" {% if session['pref_b_dimension'] == True %} checked {% endif %}>
+    <input type="radio" name="pref_b_dimension" value="True" {% if g.get_pref('pref_b_dimension') == True %} checked {% endif %}>
     <label for="threeD">3D</label> /
-    <input type="radio" name="pref_b_dimension" value="False" {% if session['pref_b_dimension'] != True %} checked {% endif %}>
+    <input type="radio" name="pref_b_dimension" value="False" {% if g.get_pref('pref_b_dimension') != True %} checked {% endif %}>
     <label for="twoD">2D</label> 
 
     <h3>Show sticker letter</h3>
-    <input type="radio" name="pref_s_showletter" value="dont" {% if session['pref_s_showletter'] == "dont" %} checked {% endif %}> 
+    <input type="radio" name="pref_s_showletter" value="dont" {% if g.get_pref('pref_s_showletter') == "dont" %} checked {% endif %}> 
     <label for="">Do not show</label> /
-    <input type="radio" name="pref_s_showletter" value="hover" {% if session['pref_s_showletter'] == "hover" %} checked {% endif %}> 
+    <input type="radio" name="pref_s_showletter" value="hover" {% if g.get_pref('pref_s_showletter') == "hover" %} checked {% endif %}> 
     <label for="">Show on hover</label> /
-    <input type="radio" name="pref_s_showletter" value="always" {% if session['pref_s_showletter'] == "always" %} checked {% endif %}>
+    <input type="radio" name="pref_s_showletter" value="always" {% if g.get_pref('pref_s_showletter') == "always" %} checked {% endif %}>
     <label for="">Always show</label>
 
     <h3>Number of shuffle moves</h3>
     <p>A number of moves will be randomly selected from the range so as to generate shuffles which require and not require parity corrections evenly.</p>
     
     <select name="pref_i_shufflen" id="pref_i_shufflen">
-        <option value="6"  {% if session['pref_i_shufflen'] == 6  %} selected {% endif %}>  6 or 7 moves</option>
-        <option value="10" {% if session['pref_i_shufflen'] == 10 %} selected {% endif %}>10 or 11 moves</option>
-        <option value="20" {% if session['pref_i_shufflen'] == 20 %} selected {% endif %}>20 or 21 moves</option>
-        <option value="30" {% if session['pref_i_shufflen'] == 30 %} selected {% endif %}>30 or 31 moves</option>
+        <option value="6"  {% if g.get_pref('pref_i_shufflen') == 6  %} selected {% endif %}>  6 or 7 moves</option>
+        <option value="10" {% if g.get_pref('pref_i_shufflen') == 10 %} selected {% endif %}>10 or 11 moves</option>
+        <option value="20" {% if g.get_pref('pref_i_shufflen') == 20 %} selected {% endif %}>20 or 21 moves</option>
+        <option value="30" {% if g.get_pref('pref_i_shufflen') == 30 %} selected {% endif %}>30 or 31 moves</option>
     </select>
     <br>
     
