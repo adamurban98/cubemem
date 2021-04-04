@@ -196,12 +196,12 @@ class Cube:
         self.cubecode = cubecode
 
     @property
-    @lru_cache
+    @lru_cache()
     def colors(self):
         return parse_cubecode(self.cubecode)
 
     @property
-    @lru_cache
+    @lru_cache()
     def stickers(self):
         stickers = {}
         for piece in edges + corners:
