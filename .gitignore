@@ -1,3 +1,5 @@
 __pycache__
 *.cube
 tmp
+.coverage
+.vscode
