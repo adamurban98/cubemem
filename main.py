@@ -82,14 +82,11 @@ def cube():
     g.random=random
     g.str=str
 
-    print('here')
-
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
         return redirect(url_for('cube', cubecode=cubecode))
     else:
         shuffle = session.get('shuffle', '')
-        print(request.args)
         cube = cube_from_url_args(request.args)
         return render_template(
             'cube.html',
