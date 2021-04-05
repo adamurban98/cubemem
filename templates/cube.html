@@ -63,44 +63,6 @@ This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 {% endfor %}
 
 
-<h2>Text based configuration</h2>
-
-To input a configuration write down the colors of the stickers row by row as seen on the scheme. All characters excetp <code>w b o g r y</code> will be ignored and can therefore be used as puntuation to increast readability.
-<br>
-<br>
-<form action="/cube">
-    <textarea style="font-family: monospace;" name="cubecode-userinput" id="cubecode-userinput" rows="10">
-    www    
-    www
-    www
-bbb|ooo|ggg|rrr    
-bbb|ooo|ggg|rrr
-bbb|ooo|ggg|rrr
-    yyy
-    yyy
-    yyy
-    </textarea>
-    <span id="results"></span>
-    <input type="submit" id="cubecode-userinput-submit" value="Upload config">
-</form>    
 
 
-<script type=text/javascript>
-    $(function() {
-      $('textarea#cubecode-userinput').on('input', function() {
-        console.log($('textarea#cubecode-userinput').val());
-        $.getJSON(
-            '/_parse-cubecode-userinput',
-            {userinput: $('textarea#cubecode-userinput').val()}, 
-            function(results) {
-                $("span#results").text(results.message);
-                $("input#cubecode-userinput-submit").prop("disabled", !results.valid);
-            }
-        );
-        return false;
-      });
-    });
-  </script>
-
-
-  {% include 'footer.html' %}
+{% include 'footer.html' %}
