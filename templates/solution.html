@@ -1,9 +1,13 @@
+{% from 'shuffle_sequence.html' import shuffle_sequence %}
+{% from 'cubechart.html' import cubechart %}
+
 {% include 'header.html' %}
 
 <h1>Blindfolded solution</h1>
 
-
-{% from 'cubechart.html' import cubechart %}
+<h3>
+    {{ shuffle_sequence(cube) }}
+</h3>
 
 {% macro my_cubechart(cube) -%}
     <center>
@@ -27,14 +31,18 @@
             <td>
                 {%- for step, dummy in g.zip(solution.corner_steps, solution.corner_dummy_move ) -%}
                     <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
-                    {{ loop.cycle("", " - ") }}
+                    {%- if not loop.last %}
+                        {{ loop.cycle("", " - ") }}
+                    {% endif %}
                 {% endfor -%}
             </td>
             <td>{% if solution.parity %} YES {% else %} NO {% endif %} </td>
             <td>
                 {%- for step, dummy in g.zip(solution.edge_steps, solution.edge_dummy_move ) -%}
                     <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
-                    {{ loop.cycle("", " - ") }}
+                    {%- if not loop.last %}
+                        {{ loop.cycle("", " - ") }}
+                    {% endif %}
                 {% endfor -%}
             </td>
         </tr>
