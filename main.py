@@ -74,9 +74,7 @@ def mnemonics():
 def cube():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
-    
-    show_3d = request.args.get('show3d', False)
- 
+
     g.c_to_s=c_to_s
     g.random=random
     g.str=str
@@ -90,7 +88,6 @@ def cube():
         return render_template(
             'cube.html',
             cube=cube,
-            show_3d=True,
             shuffle= ' '.join(c_to_s(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
         )
 
