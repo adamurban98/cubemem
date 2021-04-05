@@ -20,11 +20,9 @@ def _test_solution(cube, solution):
         cube = cube.alg_t()
         cube = cube.undo_setup_moves(step)
 
-    assert cube == Cube(), 'Assert that the cube is solved.'
+    assert cube.cubestate_equal(Cube.create()), 'Assert that the cube is solved.'
 
 def test_solutions():
-    
-    cube1 = Cube().moves('URLDRB')
+    cube1 = Cube.create().moves('URLDRB')
     solution1 = Solution.solve(cube1)
-
     _test_solution(cube1, solution1)

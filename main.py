@@ -64,7 +64,7 @@ def preferences():
 
     return render_template('preferences.html')
 
-mnemonics_data = yaml.load(open('mnemonics.yaml').read())
+mnemonics_data = yaml.load(open('mnemonics.yaml').read(), Loader=yaml.Loader)
 
 @app.route('/mnemonics')
 def mnemonics():
@@ -86,12 +86,12 @@ def cube():
         return redirect(url_for('cube', cubecode=cubecode))
     else:
         shuffle = session.get('shuffle', '')
-        cube = Cube(cubecode)
+        cube = Cube.create(cubecode)
         return render_template(
             'cube.html',
             cube=cube,
             show_3d=True,
-            shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
+            shuffle= ' '.join(c_to_s(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
         )
 
 @app.route('/shuffle')
@@ -103,7 +103,7 @@ def shuffle():
     return redirect(
         url_for(
             'cube',
-            cubecode=Cube().moves(shuffle).cubecode
+            cubecode=Cube.create().moves(shuffle).cubecode
             )
         )
     
@@ -112,14 +112,14 @@ def move():
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
     moves = request.args.get('moves', 'U')
 
-    cube = Cube(cubecode).moves(moves)
+    cube = Cube.create(cubecode).moves(moves)
 
     return redirect(url_for('cube', cubecode=cube.cubecode))
 
 @app.route('/solution')
 def solution():    
     cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
-    cube = Cube(cubecode)
+    cube = Cube.create(cubecode)
     solution = Solution.solve(cube)
 
     def get_mnemonic(que):
@@ -136,7 +136,7 @@ def solution():
     g.str = str
     
     shuffle=session.get('shuffle', 'XX')
-    shuffle= ' '.join(c_to_s(list(shuffle))) if cube==Cube().moves(shuffle) else None
+    shuffle= ' '.join(c_to_s(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
     
     g.zip = zip
     return render_template('solution.html', solution=solution, shuffle=shuffle)

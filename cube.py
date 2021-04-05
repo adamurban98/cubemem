@@ -1,5 +1,7 @@
 import string
 from functools import lru_cache
+import typing
+from abc import ABC, abstractmethod
 
 stickers_by_color = dict(
     w = list('abcdABCD') + ['TOP'],
@@ -160,7 +162,7 @@ S:
 
 
 import yaml
-moves_config = yaml.load(moves_config)
+moves_config = yaml.load(moves_config, Loader=yaml.Loader)
 
 forward_moves = {}
 reverse_moves = {}
@@ -184,16 +186,24 @@ moves = dict(**forward_moves, **reverse_moves)
 DEFAULT_CUBECODE='wwwwwwwwwbbbooogggrrrbbbooogggrrrbbbooogggrrryyyyyyyyy'
 import logging
 
-setup_moves = yaml.load(open('setup_moves.yaml','r').read())
+setup_moves = yaml.load(open('setup_moves.yaml','r').read(), Loader=yaml.Loader)
 
-class Cube:
-    def __init__(self, cubecode=DEFAULT_CUBECODE):
-        self.set_cubecode(cubecode=cubecode)
+def clean_cubecode(raw_cubecode):
+    return ''.join([c for c in cubecode if c in 'wbogry'])
 
-    def set_cubecode(self, cubecode):
-        cubecode = ''.join([c for c in cubecode if c not in ',.-'])
-        assert len(cubecode) == 3*3*6, f'Cubecode should contain exactly {3*3*6} characters, you inserted a cubecode of length {len(cubecode)}'
-        self.cubecode = cubecode
+
+
+class Cube(ABC):
+    @staticmethod
+    def create(cubecode=None, shuffle=None) -> 'Cube':
+        if cubecode is not None and shuffle is not None:
+            raise ValueError('Both cubecode and shuffle set. When using the abstract cube constructor only one of the should be set.')
+        elif cubecode is not None and cubecode != DEFAULT_CUBECODE:
+            return CubeCubecode(cubecode)
+        elif shuffle is not None:
+            return CubeShuffled(shuffle)
+        else:
+            return CubeShuffled([])            
 
     @property
     @lru_cache()
@@ -216,24 +226,14 @@ class Cube:
         return stickers
 
     @staticmethod
-    def colors_to_cubecode(colors, sep=','):
+    def colors_to_cubecode(colors):
         cubecode = ''
         for row in simple_sticker_ordering:
             for position in row:
                 cubecode += colors[position]
-            cubecode += sep
         return cubecode
     
-    def _move(self, move):
-        new_colors = copy.deepcopy(self.colors)
-            
-        for submove in moves[move]:
-            f = submove[0]
-            t = submove[1]
-            new_colors[t] = self.colors[f]
 
-        return Cube(self.colors_to_cubecode(new_colors))
-                
     def moves(self, moves):
         cube = self
         for move in moves:
@@ -250,7 +250,7 @@ class Cube:
             elif move == 'z':
                 cube = cube.moves('fsB')
             else:
-                cube = cube._move(move)
+                cube = cube.move(move)
         return cube
 
     def alg_t(self):
@@ -271,8 +271,7 @@ class Cube:
         new_colors['e'] = self.colors['m']
         new_colors['m'] = self.colors['e']
 
-
-        return Cube(self.colors_to_cubecode(new_colors))
+        return Cube.create(self.colors_to_cubecode(new_colors))
 
 
     def alg_j(self):
@@ -293,8 +292,7 @@ class Cube:
         new_colors['q'] = self.colors['e']
         new_colors['e'] = self.colors['q']
 
-
-        return Cube(self.colors_to_cubecode(new_colors))
+        return Cube.create(self.colors_to_cubecode(new_colors))
 
 
     def alg_y(self):
@@ -315,13 +313,18 @@ class Cube:
         new_colors['q'] = self.colors['e']
         new_colors['e'] = self.colors['q']
 
-        return Cube(self.colors_to_cubecode(new_colors))
+        return Cube.create(self.colors_to_cubecode(new_colors))
 
     def setup_moves(self, position):
         return self.moves(setup_moves[position])
 
     def undo_setup_moves(self, position):
         return self.moves(str.swapcase(setup_moves[position][::-1]))
+
+    @abstractmethod
+    def cubecode(self) -> str:
+        pass
+        
 
     @property
     def corners_solved(self):
@@ -333,7 +336,7 @@ class Cube:
 
     @property
     def centers_solved(self):
-        refcube = Cube()
+        refcube = Cube.create()
         return all([refcube.colors[position] == self.colors[position] for position in center_stickers])
 
     @property
@@ -371,20 +374,52 @@ class Cube:
         i+=3
         return r
     
-    def __eq__(self, other):
+    def cubestate_equal(self, other):
         return self.cubecode == other.cubecode
-    
-    def __hash__(self):
-        return hash(self.cubecode)
 
-    
+class CubeCubecode(Cube):
+    def __init__(self, cubecode=DEFAULT_CUBECODE):
+        assert len(cubecode) == 3*3*6, f'Cubecode should contain exactly {3*3*6} characters, you inserted a cubecode of length {len(cubecode)}'
+        self._cubecode = cubecode
 
+    @property
+    def cubecode(self):
+        return self._cubecode
+
+    @property
+    def shuffle(self):
+        return None
+
+    def move(self, move):
+        new_colors = copy.deepcopy(self.colors)
+            
+        for submove in moves[move]:
+            f = submove[0]
+            t = submove[1]
+            new_colors[t] = self.colors[f]
+
+        return CubeCubecode(self.colors_to_cubecode(new_colors))
+
+class CubeShuffled(Cube):
+    def __init__(self, shuffle=[]):
+        for move in shuffle:
+            valid_moves = list('UDLRFBudlrfbMESmesXYZxyz')
+            assert move in valid_moves, f'Move {move} is not one of the valid moves: {valid_moves}'
+        self.shuffle = shuffle
+    
+    @property
+    def cubecode(self):
+        return CubeCubecode().moves(self.shuffle).cubecode
+
+    def move(self, move):
+        return CubeShuffled(self.shuffle + [move])
+                         
 
 if __name__ == '__main__':
     print(setup_moves)
     import string
     for position in sorted(set(setup_moves.keys()) - set('AER') - set(string.ascii_lowercase)):
-        cube = Cube(cubecode=DEFAULT_CUBECODE)
+        cube = Cube.create(cubecode=DEFAULT_CUBECODE)
         a = cube.setup_moves(position)
         b = a.undo_setup_moves(position)
         print(f'Checking position {position}')
@@ -392,11 +427,10 @@ if __name__ == '__main__':
         assert a.stickers['C'] == position 
     
     for position in sorted(set(setup_moves.keys()) - set('bm') - set(string.ascii_uppercase)):
-        cube = Cube(cubecode=DEFAULT_CUBECODE)
+        cube = Cube.create(cubecode=DEFAULT_CUBECODE)
         a = cube.setup_moves(position)
         b = a.undo_setup_moves(position)
         print(f'Checking position {position}')
         assert cube == b
         assert a.stickers['d'] == position 
-    
     
