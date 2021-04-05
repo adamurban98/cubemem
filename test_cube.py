@@ -26,5 +26,3 @@ def test_cube_shuffled():
     assert Cube.create().moves('URLD').shuffle == list('URLD')
 
     assert Cube.create().moves('URLD').alg_t().shuffle == None
-
-# def test_cube_shuffled_():

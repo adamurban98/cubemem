@@ -189,8 +189,7 @@ import logging
 setup_moves = yaml.load(open('setup_moves.yaml','r').read(), Loader=yaml.Loader)
 
 def clean_cubecode(raw_cubecode):
-    return ''.join([c for c in cubecode if c in 'wbogry'])
-
+    return ''.join([c for c in raw_cubecode if c in 'wbogry'])
 
 
 class Cube(ABC):

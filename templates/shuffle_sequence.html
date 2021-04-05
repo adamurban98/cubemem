@@ -1,0 +1,7 @@
+{% macro shuffle_sequence(cube) -%}
+
+{%- if cube.shuffle %}
+    Shuffle sequence: {% for step in g.c_to_s(cube.shuffle) %} {{step}} {% endfor %}
+{% endif %}
+
+{% endmacro %}

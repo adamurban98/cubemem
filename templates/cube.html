@@ -1,5 +1,6 @@
 {% include 'header.html' %}
 {% from 'cubechart.html' import cubechart %}
+{% from 'shuffle_sequence.html' import shuffle_sequence %}
 
 <h1>Cubemem 
 <small>
@@ -7,9 +8,9 @@
 </small> 
 </h1>
 
-{% if shuffle %}
-<h2>Shuffle sequence: {{shuffle}}</h2>
-{% endif %}
+<h3>
+    {{ shuffle_sequence(cube) }}
+</h3>
 
 <hr>
 
@@ -20,7 +21,7 @@
 This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 <hr>
 
-<button onclick="window.location.href='{{ url_for('solution', cubecode=cube.cubecode) }}';">Solve!</button>
+<button onclick="window.location.href='{{ url_for('solution', **g.cube_to_url_args(cube)) }}';">Solve!</button>
 <button onclick="window.location.href='{{ url_for('shuffle') }}';">Shuffle!</button>
 <br>
 
@@ -38,25 +39,25 @@ This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 
 
 {% for move in 'UuRrFf' %}
-<a class="squarebutton" href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+<a class="squarebutton" href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
     <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'DdLlBb' %}
-<a class="squarebutton" href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+<a class="squarebutton" href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
     <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'MmEeSs' %}
-<a class="squarebutton"  href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+<a class="squarebutton"  href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
     <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'XxYyZz' %}
-<a class="squarebutton"  href="{{ url_for('move', cubecode=cube.cubecode, moves=move) }}">
+<a class="squarebutton"  href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
     <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
 </a>
 {% endfor %}

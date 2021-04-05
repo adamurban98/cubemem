@@ -3,7 +3,7 @@
 # Cubemem [cube.app.adamurban.net 🌍](https://cube.app.adamurban.net/)
 
 ## Todo
-- [ ] shuffle records moves
+- [x] shuffle records moves
 - [x] default preferences
 - [ ] gracefull fail on cubecodes with mistakes
 - [ ] write howto

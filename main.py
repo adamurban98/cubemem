@@ -8,6 +8,8 @@ from moves import s_to_c, c_to_s
 import yaml
 import logging
 from collections import defaultdict
+from cube_url import cube_from_url_args, cube_to_url_args
+
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -41,6 +43,9 @@ def register_get_pref():
             KeyError(key)
 
     g.get_pref = get_pref
+    g.c_to_s=c_to_s
+    g.cube_from_url_args = cube_from_url_args
+    g.cube_to_url_args   = cube_to_url_args
         
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -72,19 +77,20 @@ def mnemonics():
 
 @app.route('/cube')
 def cube():
-    cubecode = request.args.get('cubecode', DEFAULT_CUBECODE) 
     cubecode_userinput = request.args.get('cubecode-userinput', None)
 
-    g.c_to_s=c_to_s
     g.random=random
     g.str=str
+
+    print('here')
 
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
         return redirect(url_for('cube', cubecode=cubecode))
     else:
         shuffle = session.get('shuffle', '')
-        cube = Cube.create(cubecode)
+        print(request.args)
+        cube = cube_from_url_args(request.args)
         return render_template(
             'cube.html',
             cube=cube,
@@ -100,23 +106,22 @@ def shuffle():
     return redirect(
         url_for(
             'cube',
-            cubecode=Cube.create().moves(shuffle).cubecode
+            **cube_to_url_args(Cube.create(shuffle=shuffle))
             )
         )
     
 @app.route('/move')
 def move():    
-    cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
     moves = request.args.get('moves', 'U')
 
-    cube = Cube.create(cubecode).moves(moves)
+    cube = cube_from_url_args(request.args)
+    cube = cube.moves(list(moves))
 
-    return redirect(url_for('cube', cubecode=cube.cubecode))
+    return redirect(url_for('cube', **cube_to_url_args(cube)))
 
 @app.route('/solution')
-def solution():    
-    cubecode = request.args.get('cubecode', DEFAULT_CUBECODE)
-    cube = Cube.create(cubecode)
+def solution():
+    cube = cube_from_url_args(request.args)
     solution = Solution.solve(cube)
 
     def get_mnemonic(que):
@@ -132,11 +137,8 @@ def solution():
     g.random = random
     g.str = str
     
-    shuffle=session.get('shuffle', 'XX')
-    shuffle= ' '.join(c_to_s(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
-    
     g.zip = zip
-    return render_template('solution.html', solution=solution, shuffle=shuffle)
+    return render_template('solution.html', solution=solution, cube=cube)
 
 
 @app.route('/_parse-cubecode-userinput')
