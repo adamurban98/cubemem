@@ -7,6 +7,7 @@
 - [x] default preferences
 - [ ] gracefull fail on cubecodes with mistakes
 - [ ] write howto
+- [ ] allow to choose buffer stickers and swap algorithms
 
 
 ## Testing
