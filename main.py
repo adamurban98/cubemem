@@ -128,7 +128,7 @@ def solution():
         if mnemonic == []:
             mnemonic = [{'name': que}]
 
-        return mnemonic[0]['name'] 
+        return random.choice(mnemonic)['name'] 
 
     g.get_mnemonic = get_mnemonic
     g.random = random
