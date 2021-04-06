@@ -40,25 +40,25 @@ This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 
 {% for move in 'UuRrFf' %}
 <a class="squarebutton" href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
-    <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
+    <button class="squarebutton"> {{ g.moves_to_human_readable([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'DdLlBb' %}
 <a class="squarebutton" href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
-    <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
+    <button class="squarebutton"> {{ g.moves_to_human_readable([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'MmEeSs' %}
 <a class="squarebutton"  href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
-    <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
+    <button class="squarebutton"> {{ g.moves_to_human_readable([move])[0] }} </button>
 </a>
 {% endfor %}
 <br height="20">
 {% for move in 'XxYyZz' %}
 <a class="squarebutton"  href="{{ url_for('move', moves=move, **g.cube_to_url_args(cube)) }}">
-    <button class="squarebutton"> {{ g.c_to_s([move])[0] }} </button>
+    <button class="squarebutton"> {{ g.moves_to_human_readable([move])[0] }} </button>
 </a>
 {% endfor %}
 

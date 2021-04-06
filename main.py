@@ -4,7 +4,7 @@ from datetime import timedelta
 import random
 from cube import Cube, DEFAULT_CUBECODE
 from solution import Solution
-from moves import s_to_c, c_to_s
+from moves import s_to_c, moves_to_human_readable
 import yaml
 import logging
 from collections import defaultdict
@@ -43,7 +43,7 @@ def register_get_pref():
             KeyError(key)
 
     g.get_pref = get_pref
-    g.c_to_s=c_to_s
+    g.moves_to_human_readable=moves_to_human_readable
     g.cube_from_url_args = cube_from_url_args
     g.cube_to_url_args   = cube_to_url_args
         
@@ -91,7 +91,7 @@ def cube():
         return render_template(
             'cube.html',
             cube=cube,
-            shuffle= ' '.join(c_to_s(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
+            shuffle= ' '.join(moves_to_human_readable(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
         )
 
 @app.route('/shuffle')
