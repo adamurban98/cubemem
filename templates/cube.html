@@ -21,7 +21,7 @@
 This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
 <hr>
 
-<button onclick="window.location.href='{{ url_for('solution', **g.cube_to_url_args(cube)) }}';">Solve!</button>
+<button onclick="window.location.href='{{ url_for('solution', **g.cube_to_url_args(cube)) }}';">Generate blindfolded solution!</button>
 <button onclick="window.location.href='{{ url_for('shuffle') }}';">Shuffle!</button>
 <br>
 
