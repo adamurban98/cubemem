@@ -7,6 +7,7 @@ from moves import moves_to_human_readable
 import yaml
 import logging
 from cube_url import cube_from_url_args, cube_to_url_args
+import os
 
 
 app = Flask(__name__)
@@ -14,9 +15,11 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = 'adamka'
 app.logger.setLevel(logging.INFO)
 
+
 @app.errorhandler(404)
 def error(e):
     return render_template('error.html')
+
 
 @app.route('/')
 def hello_world():
@@ -25,13 +28,13 @@ def hello_world():
 
 @app.before_request
 def register_get_pref():
-    
+
     defaults = dict(
-        pref_b_dimension = True,
-        pref_s_showletter = 'hover',
-        pref_i_shufflen = 10,
+        pref_b_dimension=True,
+        pref_s_showletter='hover',
+        pref_i_shufflen=10,
     )
-    
+
     def get_pref(key):
         if key in session:
             return session[key]
@@ -41,10 +44,10 @@ def register_get_pref():
             KeyError(key)
 
     g.get_pref = get_pref
-    g.moves_to_human_readable=moves_to_human_readable
+    g.moves_to_human_readable = moves_to_human_readable
     g.cube_from_url_args = cube_from_url_args
-    g.cube_to_url_args   = cube_to_url_args
-        
+    g.cube_to_url_args = cube_to_url_args
+
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
@@ -60,25 +63,27 @@ def preferences():
             session[k] = processed_v
             app.logger.info(f"Preference {k:30} set to {processed_v}")
 
-    
     next_page = request.args.get('next', False)
     if next_page:
         return redirect(next_page)
 
     return render_template('preferences.html')
 
+
 mnemonics_data = yaml.load(open('mnemonics.yaml').read(), Loader=yaml.Loader)
+
 
 @app.route('/mnemonics')
 def mnemonics():
     return render_template('mnemonics.html', mnemonics=mnemonics_data)
 
+
 @app.route('/cube')
 def cube():
     cubecode_userinput = request.args.get('cubecode-userinput', None)
 
-    g.random=random
-    g.str=str
+    g.random = random
+    g.str = str
 
     if cubecode_userinput is not None:
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
@@ -89,13 +94,14 @@ def cube():
         return render_template(
             'cube.html',
             cube=cube,
-            shuffle= ' '.join(moves_to_human_readable(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
+            shuffle=' '.join(moves_to_human_readable(list(shuffle))) if cube.cubestate_equal(Cube.create().moves(shuffle)) else None
         )
+
 
 @app.route('/shuffle')
 def shuffle():
     n = g.get_pref('pref_i_shufflen')
-    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(random.choice([n,n+1]))])
+    shuffle = ''.join([random.choice('RrLlUuDdBbFf') for i in range(random.choice([n, n+1]))])
     session['shuffle'] = shuffle
 
     return redirect(
@@ -104,15 +110,17 @@ def shuffle():
             **cube_to_url_args(Cube.create(shuffle=shuffle))
             )
         )
-    
+
+
 @app.route('/move')
-def move():    
+def move():
     moves = request.args.get('moves', 'U')
 
     cube = cube_from_url_args(request.args)
     cube = cube.moves(list(moves))
 
     return redirect(url_for('cube', **cube_to_url_args(cube)))
+
 
 @app.route('/solution')
 def solution():
@@ -126,13 +134,13 @@ def solution():
         if mnemonic == []:
             mnemonic = [{'name': que}]
 
-        return random.choice(mnemonic)['name'] 
+        return random.choice(mnemonic)['name']
 
     g.get_mnemonic = get_mnemonic
     g.random = random
     g.str = str
-    
     g.zip = zip
+
     return render_template('solution.html', solution=solution, cube=cube)
 
 
@@ -146,16 +154,14 @@ def _verify_userinput():
         cubecode = ''.join([c for c in cubecode_userinput if c in 'wbogry'])
 
         if len(cubecode) > 3*3*6:
-            return jsonify(valid=False,message='Input too long.')
+            return jsonify(valid=False, message='Input too long.')
         elif len(cubecode) < 3*3*6:
-            return jsonify(valid=False,message='Input too short.')
+            return jsonify(valid=False, message='Input too short.')
         else:
             return jsonify(valid=True, cubecode=cubecode, message='Input OK.')
 
     else:
-        return jsonify(valid=False,message='No userinput provided.')
-
-
+        return jsonify(valid=False, message='No userinput provided.')
 
 
 if __name__ == "__main__":
