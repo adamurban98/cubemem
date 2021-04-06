@@ -1,13 +1,11 @@
 from flask import Flask
 from flask import request, render_template, url_for, session, redirect, jsonify, g
-from datetime import timedelta
 import random
-from cube import Cube, DEFAULT_CUBECODE
+from cube import Cube
 from solution import Solution
-from moves import s_to_c, moves_to_human_readable
+from moves import moves_to_human_readable
 import yaml
 import logging
-from collections import defaultdict
 from cube_url import cube_from_url_args, cube_to_url_args
 
 
