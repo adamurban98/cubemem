@@ -1,22 +1,23 @@
 import string
 from functools import lru_cache
-import typing
 from abc import ABC, abstractmethod
+import yaml
+import copy
 
 stickers_by_color = dict(
-    w = list('abcdABCD') + ['TOP'],
-    b = list('efghEFGH') + ['LEFT'],
-    o = list('ijklIJKL') + ['FRONT'],
-    g = list('mnopMNOP') + ['RIGHT'],
-    r = list('qrstQRST') + ['BACK'],
-    y = list('uvxzUVXZ') + ['BOTTOM'],
+    w=list('abcdABCD') + ['TOP'],
+    b=list('efghEFGH') + ['LEFT'],
+    o=list('ijklIJKL') + ['FRONT'],
+    g=list('mnopMNOP') + ['RIGHT'],
+    r=list('qrstQRST') + ['BACK'],
+    y=list('uvxzUVXZ') + ['BOTTOM'],
 )
 
 center_stickers = 'TOP,LEFT,RIGHT,FRONT,BACK,BOTTOM'.split(',')
 
 letters = 'abcdefghijklmnopqrstuvxz'
-edge_stickers = list(letters)               
-corner_stickers = list(str.upper(letters))    
+edge_stickers = list(letters)
+corner_stickers = list(str.upper(letters))
 stickers = edge_stickers + corner_stickers + center_stickers
 
 assert len(stickers) == 6*3*3
@@ -26,8 +27,10 @@ for color in stickers_by_color:
     for sticker in stickers_by_color[color]:
         lt_sticker_to_color[sticker] = color
 
+
 def sorted_by_color(piece):
     return sorted(piece, key=lambda s: lt_sticker_to_color[s])
+
 
 edges_raw = [
     tuple('aq'),
@@ -37,13 +40,13 @@ edges_raw = [
 
     tuple('fl'),
     tuple('gz'),
-    
+
     tuple('jp'),
     tuple('ku'),
-    
+
     tuple('nt'),
     tuple('ov'),
-    
+
     tuple('rh'),
     tuple('sx'),
 ]
@@ -62,13 +65,15 @@ corners_raw = [
 ]
 corners = [tuple(sorted_by_color(corner)) for corner in corners_raw]
 
+
 def piece_stickers_to_colors(piece_stickers):
     return tuple(lt_sticker_to_color[sticker] for sticker in piece_stickers)
 
+
 lt_piece_colors_to_stickers = {piece_stickers_to_colors(stickers): stickers for stickers in corners+edges}
-from pprint import pprint as pp
 
 assert len(lt_piece_colors_to_stickers) == len(corners+edges)
+
 
 def get_piece_colors_to_stickers_dict(piece_colors):
     if len(piece_colors) != 2 and len(piece_colors) != 3:
@@ -82,6 +87,7 @@ def get_piece_colors_to_stickers_dict(piece_colors):
         else:
             return dict(zip(sorted_piece_colors, sorted_piece_stickers))
 
+
 assert get_piece_colors_to_stickers_dict(tuple('ygr')) == {'g': 'O', 'r': 'T', 'y': 'X'}
 assert get_piece_colors_to_stickers_dict(tuple('wo')) == {'o': 'i', 'w': 'c'}
 
@@ -90,8 +96,8 @@ assert sorted(corner_stickers) == sorted(_corners_flattened)
 _edges_flattened = [item for sublist in edges for item in sublist]
 assert sorted(edge_stickers) == sorted(_edges_flattened)
 
-simple_sticker_ordering_raw = \
-'''A,a,B
+simple_sticker_ordering_raw = '''\
+A,a,B
 d,TOP,b
 D,c,C
 E,e,F,I,i,J,M,m,N,Q,q,R
@@ -105,12 +111,14 @@ simple_sticker_ordering = [row.split(',') for row in simple_sticker_ordering_raw
 
 simple_sticker_ordering_flat = [item for sublist in simple_sticker_ordering for item in sublist]
 
+
 def parse_cubecode(cubecode):
     cubecode = [c for c in cubecode if c not in ',.-']
     return dict(zip(simple_sticker_ordering_flat, cubecode))
 
+
 moves_config = '''
-U: &moves_u 
+U: &moves_u
 - ABCD
 - QMIE
 - RNJF
@@ -160,8 +168,6 @@ S:
 - [TOP,RIGHT,BOTTOM,LEFT]
 '''
 
-
-import yaml
 moves_config = yaml.load(moves_config, Loader=yaml.Loader)
 
 forward_moves = {}
@@ -171,22 +177,22 @@ for move, configs in moves_config.items():
     submoves = []
     for config in configs:
         config = config+config
-        submoves += [ config[0+i:2+i] for i in range(4) ] 
-    
+        submoves += [config[0+i:2+i] for i in range(4)]
+
     forward_submoves = [tuple(sm) for sm in submoves]
     reverse_submoves = [tuple(sm[::-1]) for sm in submoves]
 
     forward_moves[str.upper(move)] = forward_submoves
     reverse_moves[str.lower(move)] = reverse_submoves
 
-import copy 
-
 moves = dict(**forward_moves, **reverse_moves)
 
-DEFAULT_CUBECODE='wwwwwwwwwbbbooogggrrrbbbooogggrrrbbbooogggrrryyyyyyyyy'
-import logging
 
-setup_moves = yaml.load(open('setup_moves.yaml','r').read(), Loader=yaml.Loader)
+DEFAULT_CUBECODE = 'wwwwwwwwwbbbooogggrrrbbbooogggrrrbbbooogggrrryyyyyyyyy'
+
+
+setup_moves = yaml.load(open('setup_moves.yaml', 'r').read(), Loader=yaml.Loader)
+
 
 def clean_cubecode(raw_cubecode):
     return ''.join([c for c in raw_cubecode if c in 'wbogry'])
@@ -202,7 +208,7 @@ class Cube(ABC):
         elif shuffle is not None:
             return CubeShuffled(shuffle)
         else:
-            return CubeShuffled([])            
+            return CubeShuffled([])
 
     @property
     @lru_cache()
@@ -221,7 +227,6 @@ class Cube(ABC):
                     stickers[position] = piece_colors_to_stickers_dict[self.colors[position]]
             else:
                 print('Piece {piece} could not be parsed')
-    
         return stickers
 
     @staticmethod
@@ -231,7 +236,6 @@ class Cube(ABC):
             for position in row:
                 cubecode += colors[position]
         return cubecode
-    
 
     def moves(self, moves):
         cube = self
@@ -254,7 +258,7 @@ class Cube(ABC):
 
     def alg_t(self):
         new_colors = copy.deepcopy(self.colors)
-        
+
         new_colors['B'] = self.colors['C']
         new_colors['C'] = self.colors['B']
 
@@ -272,10 +276,9 @@ class Cube(ABC):
 
         return Cube.create(self.colors_to_cubecode(new_colors))
 
-
     def alg_j(self):
         new_colors = copy.deepcopy(self.colors)
-        
+
         new_colors['B'] = self.colors['C']
         new_colors['C'] = self.colors['B']
 
@@ -293,16 +296,15 @@ class Cube(ABC):
 
         return Cube.create(self.colors_to_cubecode(new_colors))
 
-
     def alg_y(self):
         new_colors = copy.deepcopy(self.colors)
-        
+
         new_colors['A'] = self.colors['C']
         new_colors['C'] = self.colors['A']
 
         new_colors['E'] = self.colors['M']
         new_colors['M'] = self.colors['E']
-        
+
         new_colors['R'] = self.colors['J']
         new_colors['J'] = self.colors['R']
 
@@ -323,7 +325,6 @@ class Cube(ABC):
     @abstractmethod
     def cubecode(self) -> str:
         pass
-        
 
     @property
     def corners_solved(self):
@@ -354,27 +355,28 @@ class Cube(ABC):
     def text(self):
         i = 0
         r = '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         r += '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         r += '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
-        i+=12
+        i += 12
         r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
-        i+=12
+        i += 12
         r += self.cubecode[i:i+3] + '|' + self.cubecode[i+3:i+6] + '|' + self.cubecode[i+6:i+9] + '|' + self.cubecode[i+9:i+12] + '\n'
-        i+=12
+        i += 12
         r += '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         r += '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         r += '    ' + self.cubecode[i:i+3] + '\n'
-        i+=3
+        i += 3
         return r
-    
+
     def cubestate_equal(self, other):
         return self.cubecode == other.cubecode
+
 
 class CubeCubecode(Cube):
     def __init__(self, cubecode=DEFAULT_CUBECODE):
@@ -391,7 +393,7 @@ class CubeCubecode(Cube):
 
     def move(self, move):
         new_colors = copy.deepcopy(self.colors)
-            
+
         for submove in moves[move]:
             f = submove[0]
             t = submove[1]
@@ -399,37 +401,17 @@ class CubeCubecode(Cube):
 
         return CubeCubecode(self.colors_to_cubecode(new_colors))
 
+
 class CubeShuffled(Cube):
     def __init__(self, shuffle=[]):
         for move in shuffle:
             valid_moves = list('UDLRFBudlrfbMESmesXYZxyz')
             assert move in valid_moves, f'Move {move} is not one of the valid moves: {valid_moves}'
         self.shuffle = shuffle
-    
+
     @property
     def cubecode(self):
         return CubeCubecode().moves(self.shuffle).cubecode
 
     def move(self, move):
         return CubeShuffled(self.shuffle + [move])
-                         
-
-if __name__ == '__main__':
-    print(setup_moves)
-    import string
-    for position in sorted(set(setup_moves.keys()) - set('AER') - set(string.ascii_lowercase)):
-        cube = Cube.create(cubecode=DEFAULT_CUBECODE)
-        a = cube.setup_moves(position)
-        b = a.undo_setup_moves(position)
-        print(f'Checking position {position}')
-        assert cube == b
-        assert a.stickers['C'] == position 
-    
-    for position in sorted(set(setup_moves.keys()) - set('bm') - set(string.ascii_uppercase)):
-        cube = Cube.create(cubecode=DEFAULT_CUBECODE)
-        a = cube.setup_moves(position)
-        b = a.undo_setup_moves(position)
-        print(f'Checking position {position}')
-        assert cube == b
-        assert a.stickers['d'] == position 
-    
