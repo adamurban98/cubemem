@@ -8,20 +8,27 @@
 </small> 
 </h1>
 
+<hr>
+
 <h3>
     {{ shuffle_sequence(cube) }}
 </h3>
-
-<hr>
 
 <center>
     {{ cubechart(cube=cube,size=30) }}
 </center>
 
-This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
+{% if not cube.is_aligned %}
+<p>
+    ⚠️ This cube is not standardly oriented; standard orientation is with white on the top and orange on the front.
+</p>
+{% endif %}
+<p>
+    This cube is {% if cube.solved %} solved {%- else %} unsolved{%- endif %}.
+</p>
 <hr>
 
-<button onclick="window.location.href='{{ url_for('solution', **g.cube_to_url_args(cube)) }}';">Generate blindfolded solution!</button>
+<button onclick="window.location.href='{{ url_for('solution', **g.cube_to_url_args(cube.aligned_cube())) }}';">Generate blindfolded solution!</button>
 <button onclick="window.location.href='{{ url_for('shuffle') }}';">Shuffle!</button>
 <br>
 
