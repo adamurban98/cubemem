@@ -2,6 +2,7 @@ from functools import lru_cache
 from abc import ABC, abstractmethod
 import yaml
 import copy
+from align_cube import get_cube_alignment_steps
 
 stickers_by_color = dict(
     w=list('abcdABCD') + ['TOP'],
@@ -208,6 +209,13 @@ class Cube(ABC):
             return CubeShuffled(shuffle)
         else:
             return CubeShuffled([])
+
+    @property
+    def is_aligned(self):
+        return get_cube_alignment_steps(self) == []
+
+    def aligned_cube(self):
+        return self.moves(get_cube_alignment_steps(self))
 
     @property
     @lru_cache()

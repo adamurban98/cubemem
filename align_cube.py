@@ -30,6 +30,6 @@ def get_cube_alignment_steps(cube):
         steps = steps + ['Y', 'Y']
 
     assert white_aligned_cube.colors['TOP'] == COLOR_W
-    assert white_aligned_cube.colors['FRONT'] == COLOR_O
+    assert cube.moves(steps).colors['FRONT'] == COLOR_O
 
     return steps

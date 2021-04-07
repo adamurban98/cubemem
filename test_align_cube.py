@@ -10,6 +10,9 @@ def test_align_cube():
         ['x'],
         ['Z'],
         ['z'],
+        ['z'],
+        ['Y'],
+        ['y'],
     ]
 
     for shuffle in shuffles:
