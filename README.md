@@ -6,7 +6,7 @@
 - [x] shuffle records moves
 - [x] default preferences
 - [ ] allow (again) text based input and gracefull fail on cubecodes with mistakes
-- [ ] warn on misalligned cubes
+- [x] warn on misalligned cubes
 - [ ] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
 
