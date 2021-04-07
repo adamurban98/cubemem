@@ -1,4 +1,3 @@
-import string
 from functools import lru_cache
 from abc import ABC, abstractmethod
 import yaml
@@ -237,24 +236,9 @@ class Cube(ABC):
                 cubecode += colors[position]
         return cubecode
 
+    @abstractmethod
     def moves(self, moves):
-        cube = self
-        for move in moves:
-            if move == 'X':
-                cube = cube.moves('Rml')
-            elif move == 'Y':
-                cube = cube.moves('Ued')
-            elif move == 'Z':
-                cube = cube.moves('FSb')
-            elif move == 'x':
-                cube = cube.moves('rML')
-            elif move == 'y':
-                cube = cube.moves('uED')
-            elif move == 'z':
-                cube = cube.moves('fsB')
-            else:
-                cube = cube.move(move)
-        return cube
+        pass
 
     def alg_t(self):
         new_colors = copy.deepcopy(self.colors)
@@ -401,6 +385,25 @@ class CubeCubecode(Cube):
 
         return CubeCubecode(self.colors_to_cubecode(new_colors))
 
+    def moves(self, moves):
+        cube = self
+        for move in moves:
+            if move == 'X':
+                cube = cube.moves('Rml')
+            elif move == 'Y':
+                cube = cube.moves('Ued')
+            elif move == 'Z':
+                cube = cube.moves('FSb')
+            elif move == 'x':
+                cube = cube.moves('rML')
+            elif move == 'y':
+                cube = cube.moves('uED')
+            elif move == 'z':
+                cube = cube.moves('fsB')
+            else:
+                cube = cube.move(move)
+        return cube
+
 
 class CubeShuffled(Cube):
     def __init__(self, shuffle=[]):
@@ -413,5 +416,5 @@ class CubeShuffled(Cube):
     def cubecode(self):
         return CubeCubecode().moves(self.shuffle).cubecode
 
-    def move(self, move):
-        return CubeShuffled(self.shuffle + [move])
+    def moves(self, moves):
+        return CubeShuffled(self.shuffle + list(moves))
