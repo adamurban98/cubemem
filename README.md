@@ -5,7 +5,8 @@
 ## Todo
 - [x] shuffle records moves
 - [x] default preferences
-- [ ] gracefull fail on cubecodes with mistakes
+- [ ] allow (again) text based input and gracefull fail on cubecodes with mistakes
+- [ ] warn on misalligned cubes
 - [ ] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
 
