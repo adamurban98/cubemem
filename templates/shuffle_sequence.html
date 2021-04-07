@@ -1,6 +1,6 @@
 {% macro shuffle_sequence(cube) -%}
 
-{%- if cube.shuffle %}
+{%- if g.moves_to_human_readable(cube.shuffle) %}
     Shuffle sequence: {% for step in g.moves_to_human_readable(cube.shuffle) %} {{step}} {% endfor %}
 {% endif %}
 
