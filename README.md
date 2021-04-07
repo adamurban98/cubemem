@@ -1,6 +1,8 @@
 [![Testing](https://github.com/adamurban98/cubemem/actions/workflows/test.yml/badge.svg)](https://github.com/adamurban98/cubemem/actions/workflows/test.yml)
 
-# Cubemem [cube.app.adamurban.net 🌍](https://cube.app.adamurban.net/)
+# Cubemem 
+
+[cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
 
 ## Todo
 - [x] shuffle records moves
