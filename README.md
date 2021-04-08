@@ -9,6 +9,8 @@
 - [x] default preferences
 - [ ] allow (again) text based input and gracefull fail on cubecodes with mistakes
 - [x] warn on misalligned cubes
+- [ ] suggest setup moves
+- [ ] alternative algorithms for edge solution
 - [ ] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
 
