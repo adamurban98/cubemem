@@ -2,7 +2,7 @@
 
 # Cubemem 
 
-[cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
+Try it here: [cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
 
 ## Todo
 - [x] shuffle records moves
@@ -13,6 +13,7 @@
 - [ ] alternative algorithms for edge solution
 - [ ] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
+- [ ] rotate the sticker label in 3d view on the top and bottom cube face
 
 
 ## Testing
