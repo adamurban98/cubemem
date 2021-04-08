@@ -14,6 +14,7 @@ Try it here: [cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
 - [ ] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
 - [ ] rotate the sticker label in 3d view on the top and bottom cube face
+- [ ] normalize cube codes (rare)
 
 
 ## Testing
