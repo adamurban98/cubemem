@@ -79,4 +79,54 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
     </li>
 </ol>
 
+
+<h2>Setup moves</h2>
+
+<h3>Corner setup moves</h3>
+
+<table>
+    <thead>
+        <th>Position</th>
+        <th>Setup moves</th>
+        <th>Reverse setup moves</th>
+    </thead>
+
+    <tbody>
+        {% for position in 'ABCDEFGHIJKLMNOPQRSTUVXZ' %}
+            <tr>
+                <td>{{position}}</td>
+                {% if position in 'AER' %}
+                    <td colspan="2">This position is part of the buffer sticker's piece</td>
+                {% else %}
+                    <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
+                    <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Edge setup moves</h3>
+
+<table>
+    <thead>
+        <th>Position</th>
+        <th>Setup moves</th>
+        <th>Reverse setup moves</th>
+    </thead>
+    <tbody>
+        {% for position in 'abcdefghijklmnopqrstuvxz' %}
+            <tr>
+                <td>{{position}}</td>
+                {% if position in 'bm' %}
+                    <td colspan="2">This position is part of the buffer sticker's piece</td>
+                {% else %}
+                    <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
+                    <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% include 'footer.html' %}

@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 import yaml
 import copy
 from align_cube import get_cube_alignment_steps
+from setup_moves import get_setup_moves, get_reverse_setup_moves
 
 stickers_by_color = dict(
     w=list('abcdABCD') + ['TOP'],
@@ -191,9 +192,6 @@ moves = dict(**forward_moves, **reverse_moves)
 DEFAULT_CUBECODE = 'wwwwwwwwwbbbooogggrrrbbbooogggrrrbbbooogggrrryyyyyyyyy'
 
 
-setup_moves = yaml.load(open('setup_moves.yaml', 'r').read(), Loader=yaml.Loader)
-
-
 def clean_cubecode(raw_cubecode):
     return ''.join([c for c in raw_cubecode if c in 'wbogry'])
 
@@ -309,10 +307,10 @@ class Cube(ABC):
         return Cube.create(self.colors_to_cubecode(new_colors))
 
     def setup_moves(self, position):
-        return self.moves(setup_moves[position])
+        return self.moves(get_setup_moves(position))
 
     def undo_setup_moves(self, position):
-        return self.moves(str.swapcase(setup_moves[position][::-1]))
+        return self.moves(get_reverse_setup_moves(position))
 
     @abstractmethod
     def cubecode(self) -> str:

@@ -21,6 +21,7 @@ def _match_multimoves(moves):
 
 
 def moves_to_human_readable(moves):
+    print(moves)
     assert(type(moves) == list), 'Move is not a list of chars'
 
     moves_processed = []
@@ -47,3 +48,6 @@ def moves_to_human_readable(moves):
             moves_processed += [move + '\'']
 
     return moves_processed
+
+def reverse_moves(moves):
+    return [str.swapcase(move) for move in moves[::-1]]

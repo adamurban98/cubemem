@@ -7,6 +7,7 @@ from moves import moves_to_human_readable
 import yaml
 import logging
 from cube_url import cube_from_url_args, cube_to_url_args
+from setup_moves import get_setup_moves, get_reverse_setup_moves
 import os
 
 
@@ -58,6 +59,8 @@ def register_get_pref():
     g.cube_to_url_args = cube_to_url_args
     g.random = random
     g.str = str
+    g.get_setup_moves = get_setup_moves
+    g.get_reverse_setup_moves = get_reverse_setup_moves
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
