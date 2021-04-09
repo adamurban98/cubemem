@@ -1,6 +1,7 @@
 {% include 'header.html' %}
 {% from 'cubechart_2d.html' import cubechart as cubechart_2d %}
 {% from 'cubechart_3d.html' import cubechart_3d %}
+{% from 'cubechart.html' import cubechart %}
 {% from 'shuffle_sequence.html' import shuffle_sequence %}
 
 <h1>Guide</h1>
@@ -128,5 +129,45 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
         {% endfor %}
     </tbody>
 </table>
+
+<h2 id="dummy">Dummy move selection convention</h2>
+<p>
+    When solving the cube using the Old Poachmann method it happens that the buffer piece get back to the buffer position (or may even be there at the beginning of the solve) before all the other pieces are solved.
+    In a situation like this, we have to select an unsolved piece, pick one of it's stickers and perform a swap of that sticker with the buffer.
+    We call this move a <strong>"dummy"</strong> move as it does not solve any edge or corner piece, instead it  The problem is that there are more than one possibilities for this choice, meaning that <i>there may be many possible Olc Poachmann style solutions for any given cube state.</i>
+</p>
+<p>
+    Now, to make our website usefull for learning the Old Poachmann method we need to introduce a convention that eliminates this ambiguity and thus guarantees a unique Old Poachmann solution for each cube state.
+</p>
+<p>
+    This convention is as follows: 
+    Whenever there are is more then one unsolved sticker position in a situation when the buffer piece is in the buffer position, we opt for a "dummy" sticker that comes first in the letter scheme.  
+
+</p>
+
+<h3>Example for dummy move selection</h3>
+
+Let us see the aforementioned principle in practice. In this cube there are exactly two unsolved pieces: the white-blue-red corner buffer that happens to be in an incorrect orientation in its position; and the white-orange-blue corner, which similarly is in its correct position but in an incorrect orientation:
+
+<center>
+    {{ cubechart(cube=example_cube_for_dummy_selection,size=30, showletter='always') }}
+</center>
+
+In this case we may chose any of the stickers of the unsolved white-orange-blue corner piece as a dummy. Meaning the following sets of steps will all lead to a solved cube:
+
+<ul>
+    <li><span style="color:grey">D</span> I</li>
+    <li><span style="color:grey">I</span> F</li>
+    <li><span style="color:grey">F</span> D</li>
+</ul>
+
+
+<p>
+    Applying our principle, we chose D as the sticker for the dummy move, which makes following steps unambiguous.  
+</p>
+
+<p>
+    Should it happen that the buffer piece gets back prematurely to its position again (not in this example) we simply repeat this selection procedure.
+</p>
 
 {% include 'footer.html' %}

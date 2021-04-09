@@ -32,6 +32,7 @@ def guide():
     return render_template(
         'guide.html',
         default_cube=Cube.create(),
+        example_cube_for_dummy_selection=Cube.create().setup_moves('F').alg_y().undo_setup_moves('F').setup_moves('I').alg_y().undo_setup_moves('I')
     )
 
 

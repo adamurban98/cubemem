@@ -87,8 +87,10 @@
     {{ my_cubechart(cube) }}
     <h3>
         {{loop.index}}. {{ step }} 
-        {% if dummy %} dummy {% endif %}
     </h3>
+    {% if dummy %}
+        This is a <strong>"dummy"</strong> move, meaning that multiple possible steps could have been taken at this point. If you wonder why chose this one, read the <a href="/guide#dummy">dummy move selection convention</a> in our guide.
+    {% endif %}
     <details> 
         <summary>How to preform this step</summary>
         <table>
@@ -139,16 +141,18 @@
             </ul>
         </table>
     </details>
-
-
 {% endif %}
 
 {% for step, cube, dummy in g.zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
     {{ my_cubechart(cube)}}
     <h3>
         {{loop.index}}. {{ step }} 
-        {% if dummy %} dummy {% endif %}
     </h3>
+    
+    {% if dummy %}
+        This is a <strong>"dummy"</strong> move, meaning that multiple possible steps could have been taken at this point. If you wonder why chose this one, read the <a href="/guide#dummy">dummy move selection convention</a> in our guide.
+    {% endif %}
+
     <details> 
         <summary>How to preform this step</summary>
         <table>
