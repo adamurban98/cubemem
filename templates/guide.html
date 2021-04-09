@@ -30,7 +30,7 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
 <ol>
     <li>
         <h3>Corner swapping using Y perm</h3>
-        <p>The Y perm: <code>{{g.moves_to_human_readable(PERM_MOVES["Y"]) | join(" ")}}</code></p>
+        <p>The Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></p>
         <p>
             <ul>
                 <li>The sticker that is intended to be swapped with the buffer sticker has to be moved to position <i>C</i>. The setup moves may not use moves that involve the <code>U B L</code> layers as these would disrupt the buffer sticker or the edge pieces that are temporarily swapped.</li>
@@ -39,7 +39,7 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
             </ul>
         </p>
         <p> 
-            Most Old Poachman tutorials actually swap the buffer position <i>A</i> with position <i>P</i> using a slightly modified version of the Y perm: <code>{{g.moves_to_human_readable(PERM_MOVES["Y_OP"]) | join(" ")}}</code>.
+            Most Old Poachman tutorials actually swap the buffer position <i>A</i> with position <i>P</i> using a slightly modified version of the Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y_OP"]) | join(" ")}}</code>.
             This is a sensible decision as that position requires on average less complex setup moves and in addition to this the algorithm is shorter. Nevertheless we prefer the regular version, as that is already in the muscle memory of most cube solvers.
 
         </p>
@@ -51,19 +51,19 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
             Therefore if the solution requires an odd number of corner swaps, we perform an <i>R perm</i>, which fixes the incorrectly swapped edge pieces of the <i>a</i> and <i>d</i> positions and also swaps the corner pieces of the <i>B</i> and <i>C</i> stickers. This swap is then automatically when an odd number of <i>T perms</i> is performed when solving the edge pieces.
         </p>
         <p>
-            The R perm: <code>{{g.moves_to_human_readable(PERM_MOVES["R"]) | join(" ") }}</code>
+            The R perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["R"]) | join(" ") }}</code>
         </p>
         <p>
             The <i>R perm</i> can be replaced by a combination of <i>L perm</i> and <i>Y perm</i>:
             <ul>
-                <li>L perm: <code>{{g.moves_to_human_readable(PERM_MOVES["MY_L"]) | join(" ")}}</code></li>
-                <li>Y perm: <code>{{g.moves_to_human_readable(PERM_MOVES["Y"]) | join(" ")}}</code></li>
+                <li>L perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["MY_L"]) | join(" ")}}</code></li>
+                <li>Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></li>
             </ul>
         </p>
     </li>
     <li>
         <h3>Edge swapping using T perm</h3>
-        <p>The T perm: <code>{{g.moves_to_human_readable(PERM_MOVES["T"]) | join(" ")}}</code></p>
+        <p>The T perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["T"]) | join(" ")}}</code></p>
         <p>
             <ul>
                 <li>The sticker that is intended to be swapped with the buffer sticker <i>b</i> has to be moved to position <i>d</i>. The setup moves may not use moves that involve the <code>U R</code> layers as these would disrupt the buffer sticker or the corner pieces that are temporarily swapped.</li>
@@ -74,7 +74,7 @@ To solve the cube blindfolded you only have to remember the 3 algorithms:
         <p> 
            For reasons similar to the ones mentioned above,
            most Old Poachman tutorials actually swap  the buffer position <i>b</i> with position <i>z</i> using a slightly modified version of the T perm:
-           <code>{{g.moves_to_human_readable(PERM_MOVES["T_OP"]) | join(" ")}}</code>.
+           <code>{{g.moves_to_human_readable(g.PERM_MOVES["T_OP"]) | join(" ")}}</code>.
         </p>
     </li>
 </ol>

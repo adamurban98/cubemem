@@ -80,21 +80,68 @@
     </ul>
 </details>
     
-    <h2>Corners</h2>
-    <p>Now it is time to execute the solution. We shall start with the corners by using position <strong>A</strong> as the buffer piece and swapping it with position <strong>C</strong> using the <i>Y permutation</i>.</p>
+<h2>Corners</h2>
+<p>Now it is time to execute the solution. We shall start with the corners by using position <strong>A</strong> as the buffer piece and swapping it with position <strong>C</strong> using the <i>Y permutation</i>.</p>
 
-    {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
-{{ my_cubechart(cube) }}
-<h3>
-    {{loop.index}}. {{ step }} 
-    {% if dummy %} dummy {% endif %}
-</h3>
+{% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
+    {{ my_cubechart(cube) }}
+    <h3>
+        {{loop.index}}. {{ step }} 
+        {% if dummy %} dummy {% endif %}
+    </h3>
+    <details> 
+        <summary>How to preform this step</summary>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Setup position <i>{{ step }}</i> to <i>C</i></td>
+                    <td>
+                        <code>
+                            {{g.moves_to_human_readable(g.get_setup_moves(step) or []) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>                  
+                <tr>
+                    <td>Preform Y perm to swap position <i>A</i> (buffer) with <i>C</i></td>
+                    <td>
+                        <code>
+                            {{ g.moves_to_human_readable(g.PERM_MOVES['Y']) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Undo setup</td>
+                    <td>
+                        <code>
+                            {{g.moves_to_human_readable(g.get_reverse_setup_moves(step) or []) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+    </details>
+    
 {% endfor %}
 {{my_cubechart(solution.state_after_corners)}}
 
 <hr>
 <h2>Edges</h2>
-{% if solution.parity %} <h3>Perform J parity algorithm</h3> {% endif %}
+{% if solution.parity %} 
+    <h3>Perform J parity algorithm</h3> 
+    <details> 
+        <summary>How to preform this step</summary>
+        <table>
+            <p>Perform R perm <code>{{ g.moves_to_human_readable(g.PERM_MOVES['R']) | join(" ") }}</code>.</p>
+            Or perform a
+            <ul>
+                <li>L perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["MY_L"]) | join(" ")}}</code> followed by a</li>
+                <li>Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code>.</li>
+            </ul>
+        </table>
+    </details>
+
+
+{% endif %}
 
 {% for step, cube, dummy in g.zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
     {{ my_cubechart(cube)}}
@@ -102,6 +149,38 @@
         {{loop.index}}. {{ step }} 
         {% if dummy %} dummy {% endif %}
     </h3>
+    <details> 
+        <summary>How to preform this step</summary>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Setup position <i>{{ step }}</i> to <i>d</i></td>
+                    <td>
+                        <code>
+                            {{g.moves_to_human_readable(g.get_setup_moves(step) or []) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>                  
+                <tr>
+                    <td>Preform T perm to swap position <i>b</i> (buffer) with <i>d</i></td>
+                    <td>
+                        <code>
+                            {{ g.moves_to_human_readable(g.PERM_MOVES['T']) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Undo setup</td>
+                    <td>
+                        <code>
+                            {{g.moves_to_human_readable(g.get_reverse_setup_moves(step) or []) | join(" ") }}
+                        </code>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+    </details>
+
 {% endfor %}
 {{ my_cubechart(solution.finalcube) }}
 <h2>Solved!</h2>

@@ -9,6 +9,7 @@ import logging
 from cube_url import cube_from_url_args, cube_to_url_args
 from setup_moves import get_setup_moves, get_reverse_setup_moves
 import os
+from perms import PERM_MOVES
 
 
 app = Flask(__name__)
@@ -28,11 +29,9 @@ def hello_world():
 
 @app.route('/guide')
 def guide():
-    from perms import PERM_MOVES
     return render_template(
         'guide.html',
         default_cube=Cube.create(),
-        PERM_MOVES=PERM_MOVES
     )
 
 
@@ -59,6 +58,7 @@ def register_get_pref():
     g.cube_to_url_args = cube_to_url_args
     g.random = random
     g.str = str
+    g.PERM_MOVES = PERM_MOVES
     g.get_setup_moves = get_setup_moves
     g.get_reverse_setup_moves = get_reverse_setup_moves
 
