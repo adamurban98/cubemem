@@ -4,6 +4,7 @@ import yaml
 import copy
 from align_cube import get_cube_alignment_steps
 from setup_moves import get_setup_moves, get_reverse_setup_moves
+from perms import PERM_MOVES
 
 stickers_by_color = dict(
     w=list('abcdABCD') + ['TOP'],
@@ -247,64 +248,13 @@ class Cube(ABC):
         pass
 
     def alg_t(self):
-        new_colors = copy.deepcopy(self.colors)
+        return self.moves(PERM_MOVES['T'])
 
-        new_colors['B'] = self.colors['C']
-        new_colors['C'] = self.colors['B']
-
-        new_colors['J'] = self.colors['N']
-        new_colors['N'] = self.colors['J']
-
-        new_colors['Q'] = self.colors['M']
-        new_colors['M'] = self.colors['Q']
-
-        new_colors['b'] = self.colors['d']
-        new_colors['d'] = self.colors['b']
-
-        new_colors['e'] = self.colors['m']
-        new_colors['m'] = self.colors['e']
-
-        return Cube.create(self.colors_to_cubecode(new_colors))
-
-    def alg_j(self):
-        new_colors = copy.deepcopy(self.colors)
-
-        new_colors['B'] = self.colors['C']
-        new_colors['C'] = self.colors['B']
-
-        new_colors['J'] = self.colors['N']
-        new_colors['N'] = self.colors['J']
-
-        new_colors['M'] = self.colors['Q']
-        new_colors['Q'] = self.colors['M']
-
-        new_colors['a'] = self.colors['d']
-        new_colors['d'] = self.colors['a']
-
-        new_colors['q'] = self.colors['e']
-        new_colors['e'] = self.colors['q']
-
-        return Cube.create(self.colors_to_cubecode(new_colors))
+    def alg_r(self):
+        return self.moves(PERM_MOVES['R'])
 
     def alg_y(self):
-        new_colors = copy.deepcopy(self.colors)
-
-        new_colors['A'] = self.colors['C']
-        new_colors['C'] = self.colors['A']
-
-        new_colors['E'] = self.colors['M']
-        new_colors['M'] = self.colors['E']
-
-        new_colors['R'] = self.colors['J']
-        new_colors['J'] = self.colors['R']
-
-        new_colors['a'] = self.colors['d']
-        new_colors['d'] = self.colors['a']
-
-        new_colors['q'] = self.colors['e']
-        new_colors['e'] = self.colors['q']
-
-        return Cube.create(self.colors_to_cubecode(new_colors))
+        return self.moves(PERM_MOVES['Y'])
 
     def setup_moves(self, position):
         return self.moves(get_setup_moves(position))

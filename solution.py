@@ -42,7 +42,7 @@ class Solution:
         
         solution.parity = len(solution.corner_steps) % 2 == 1
         if solution.parity:
-            cube = cube.alg_j()
+            cube = cube.alg_r()
 
         # edges
         while not cube.edges_solved:

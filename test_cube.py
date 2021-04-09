@@ -17,7 +17,7 @@ def test_algorithms():
 
     assert Cube.create().alg_t().alg_t().cubestate_equal(Cube.create()), 'Algorithm T applied twice results in the original cube.'
     assert Cube.create().alg_y().alg_y().cubestate_equal(Cube.create()), 'Algorithm Y applied twice results in the original cube.'
-    assert Cube.create().alg_j().alg_j().cubestate_equal(Cube.create()), 'Algorithm J applied twice results in the original cube.'
+    assert Cube.create().alg_r().alg_r().cubestate_equal(Cube.create()), 'Algorithm R applied twice results in the original cube.'
 
 def test_cube_shuffled():
     assert Cube.create().cubecode == DEFAULT_CUBECODE
@@ -25,4 +25,4 @@ def test_cube_shuffled():
 
     assert Cube.create().moves('URLD').shuffle == list('URLD')
 
-    assert Cube.create().moves('URLD').alg_t().shuffle == None
+    # assert Cube.create().moves('URLD').alg_t().shuffle == None

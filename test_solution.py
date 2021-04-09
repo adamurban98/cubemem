@@ -13,7 +13,7 @@ def _test_solution(cube, solution):
     assert (len(solution.edge_steps) % 2 == 1) == solution.parity
 
     if solution.parity:
-        cube = cube.alg_j()
+        cube = cube.alg_r()
 
     for step in solution.edge_steps:
         cube = cube.setup_moves(step)
