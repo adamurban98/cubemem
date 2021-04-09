@@ -9,9 +9,9 @@ Try it here: [cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
 - [x] default preferences
 - [ ] allow (again) text based input and gracefull fail on cubecodes with mistakes
 - [x] warn on misalligned cubes
-- [ ] suggest setup moves
+- [x] suggest setup moves
 - [ ] alternative algorithms for edge solution
-- [ ] write howto
+- [x] write howto
 - [ ] allow to choose buffer stickers and swap algorithms
 - [ ] rotate the sticker label in 3d view on the top and bottom cube face
 - [ ] normalize cube codes (rare)
