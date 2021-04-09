@@ -62,18 +62,17 @@ class Solution:
             swapped = setup.alg_t()
             cube = swapped.undo_setup_moves(buffer_sticker)
 
-
         solution.finalcube = cube
 
         return solution
 
     def _mnemonics_pair_helper(self, step_sequence):
-        l = len(step_sequence) 
-        for i in range( l//2 ):
-            yield step_sequence[ i*2 ] + step_sequence[ i*2+1 ]
+        length = len(step_sequence)
+        for i in range(length//2):
+            yield step_sequence[i*2] + step_sequence[i*2+1]
 
-        if l % 2 == 1:
-            yield step_sequence[ -1 ]
+        if length % 2 == 1:
+            yield step_sequence[-1]
 
     @property
     def corner_mnemonic_pair_ques(self):
