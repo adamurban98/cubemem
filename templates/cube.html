@@ -2,11 +2,11 @@
 {% from 'cubechart.html' import cubechart %}
 {% from 'shuffle_sequence.html' import shuffle_sequence %}
 
-<h1>Cubemem 
-<small>
-    cube editor
-</small> 
-</h1>
+<h1>Cubemem <small>cube editor</small></h1>
+
+<p>
+    This app teaches you to solve the Rubik's cube blindfolded. Get started by shuffling the cube manually or by hitting the "shuffle" button. Then hit the "generate blindfolded solution" button.
+</p>
 
 <hr>
 
@@ -15,7 +15,7 @@
 </h3>
 
 <center>
-    {{ cubechart(cube=cube,size=30) }}
+    {{ cubechart(cube=cube,size=30, showletter=g.get_pref("pref_s_showletter")) }}
 </center>
 
 {% if not cube.is_aligned %}

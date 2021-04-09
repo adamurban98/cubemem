@@ -19,6 +19,9 @@
 <h2>Shuffle sequence: {{ shuffle }}</h2>
 {% endif %}
 
+<p>
+    To fully solve the cube you only have to memorize the following information:
+</p>
 
 <table id="solution">
     <thead>
@@ -51,8 +54,8 @@
 
 
 <details> 
-    <summary>Mnemonics</summary>
-    
+    <summary>Mnemonics to help you memorize the solution steps</summary>
+    <p>Tip: try to visualize the objects corresponding to the letter pairs and organize them in a logical narrative. Then recall the steps pair-wise based on the cues when solving. </p>
     <ul>
         <li>
             Corners:
@@ -78,6 +81,8 @@
 </details>
     
     <h2>Corners</h2>
+    <p>Now it is time to execute the solution. We shall start with the corners by using position <strong>A</strong> as the buffer piece and swapping it with position <strong>C</strong> using the <i>Y permutation</i>.</p>
+
     {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
 {{ my_cubechart(cube) }}
 <h3>

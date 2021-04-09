@@ -25,6 +25,15 @@ def error(e):
 def hello_world():
     return redirect(url_for('cube'))
 
+@app.route('/guide')
+def guide():
+    from perms import PERM_MOVES
+    return render_template(
+        'guide.html',
+        default_cube=Cube.create(),
+        PERM_MOVES=PERM_MOVES
+    )
+
 
 @app.before_request
 def register_get_pref():
@@ -47,6 +56,8 @@ def register_get_pref():
     g.moves_to_human_readable = moves_to_human_readable
     g.cube_from_url_args = cube_from_url_args
     g.cube_to_url_args = cube_to_url_args
+    g.random = random
+    g.str = str
 
 
 @app.route('/preferences', methods=['GET', 'POST'])

@@ -1,10 +1,10 @@
 {% from 'cubechart_3d.html' import cubechart_3d %}
 {% from 'cubechart_2d.html' import cubechart as cubechart_2d %}
 
-{% macro cubechart(cube, size) -%}
+{% macro cubechart(cube, size, showletter="hover") -%}
     {% if g.get_pref('pref_b_dimension') %}
-        {{ cubechart_3d(cube=cube) }}
+        {{ cubechart_3d(cube=cube, showletter=showletter) }}
     {% else %}
-        {{ cubechart_2d(cube=cube, size=30) }}
+        {{ cubechart_2d(cube=cube, size=30, showletter=showletter) }}
     {% endif %}
 {% endmacro %}

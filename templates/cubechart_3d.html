@@ -1,4 +1,4 @@
-{% macro cubechart_3d(cube) %}
+{% macro cubechart_3d(cube, showletter="hover") %}
 
 {% set cubeid='cube3d_'+g.str(g.random.randrange(1000000)) %}
 
@@ -76,9 +76,9 @@
   color: transparent;
 }
 
-{% if g.get_pref('pref_s_showletter') == 'dont' %}
+{% if showletter == 'dont' %}
 
-{% elif g.get_pref('pref_s_showletter') == 'always' %}
+{% elif showletter == 'always' %}
 
 .sticker{
   color: white;

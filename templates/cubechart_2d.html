@@ -1,4 +1,4 @@
-{% macro cubechart(cube, size=50) -%}
+{% macro cubechart(cube, size=50, showletter="hover") -%}
     <style>
         :root {
             --size: {{size}}px;
@@ -33,9 +33,9 @@
         color: transparent;
         }
         
-        {% if g.get_pref('pref_s_showletter') == 'dont' %}
+        {% if showletter == 'dont' %}
         
-        {% elif g.get_pref('pref_s_showletter') == 'always' %}
+        {% elif showletter == 'always' %}
         
         .cube td{
         color: black;
