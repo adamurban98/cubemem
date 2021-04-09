@@ -1,4 +1,4 @@
-from moves import moves_to_human_readable, _match_multimoves
+from moves import moves_to_human_readable, _match_multimoves, reverse_moves
 
 
 def test_simple():
@@ -29,3 +29,8 @@ def test_double_and_triple_moves():
     assert moves_to_human_readable(list('LUuuUR')) == ['L', 'R']            # UuuU
     assert moves_to_human_readable(list('LuuUUuuR')) == ['L', 'U2', 'R']  # uuUUuu
     assert moves_to_human_readable(list('LUUUR')) == ['L', 'U\'', 'R']        # UUU
+
+
+def test_reverse():
+    assert reverse_moves(list('')) == list('')
+    assert reverse_moves(list('Lru')) == list('URl')
