@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block body %}
+
 {% from 'shuffle_sequence.html' import shuffle_sequence %}
 {% from 'cubechart.html' import cubechart %}
 
@@ -5,9 +8,15 @@
 
 <h1>Blindfolded solution</h1>
 
-<h3>
-    {{ shuffle_sequence(cube) }}
-</h3>
+{% set shuffle_sequence_value = shuffle_sequence(cube) %}
+
+{% if shuffle_sequence_value %}
+<h2>
+    <small>
+        {{ shuffle_sequence_value }}
+    </small>
+</h2>
+{% endif %}
 
 {% macro my_cubechart(cube) -%}
     <center>
@@ -191,3 +200,5 @@
 
 
 {% include 'footer.html' %}
+
+{% endblock %}

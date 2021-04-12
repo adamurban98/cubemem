@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block body %}
+
 {% include 'header.html' %}
 {% from 'cubechart_2d.html' import cubechart as cubechart_2d %}
 {% from 'cubechart_3d.html' import cubechart_3d %}
@@ -171,3 +174,5 @@ In this case we may chose any of the stickers of the unsolved white-orange-blue 
 </p>
 
 {% include 'footer.html' %}
+
+{% endblock %}

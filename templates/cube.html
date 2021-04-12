@@ -1,7 +1,11 @@
-{% include 'header.html' %}
+{% extends "base.html" %}
+
 {% from 'cubechart.html' import cubechart %}
 {% from 'shuffle_sequence.html' import shuffle_sequence %}
 
+
+{% block body %}
+{% include 'header.html' %}
 <h1>Cubemem <small>cube editor</small></h1>
 
 <p>
@@ -10,9 +14,17 @@
 
 <hr>
 
-<h3>
-    {{ shuffle_sequence(cube) }}
-</h3>
+
+{% set shuffle_sequence_value = shuffle_sequence(cube) %}
+
+{% if shuffle_sequence_value %}
+<h2>
+    <small>
+        {{ shuffle_sequence_value }}
+    </small>
+</h2>
+{% endif %}
+
 
 <center>
     {{ cubechart(cube=cube,size=30, showletter=g.get_pref("pref_s_showletter")) }}
@@ -71,3 +83,4 @@
 
 
 {% include 'footer.html' %}
+{% endblock %}

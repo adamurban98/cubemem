@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, render_template, url_for, session, redirect, jsonify, g
+from flask import request, render_template, url_for, session, redirect, jsonify, g, Response
 import random
 from cube import Cube
 from solution import Solution
@@ -26,6 +26,17 @@ def error(e):
 @app.route('/')
 def hello_world():
     return redirect(url_for('cube'))
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    robots_txt = '''\
+User-agent: *
+Allow: /
+'''
+
+    return Response(robots_txt, mimetype='text/plain')
+
 
 @app.route('/guide')
 def guide():
