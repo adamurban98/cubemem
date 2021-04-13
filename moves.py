@@ -21,7 +21,6 @@ def _match_multimoves(moves):
 
 
 def moves_to_human_readable(moves):
-    print(moves)
     assert(type(moves) == list), 'Move is not a list of chars'
 
     moves_processed = []
