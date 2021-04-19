@@ -42,7 +42,7 @@
         <tr>
             <td>
                 {%- for step, dummy in g.zip(solution.corner_steps, solution.corner_dummy_move ) -%}
-                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
+                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step | user_letter_scheme }}</span>
                     {%- if not loop.last %}
                         {{ loop.cycle("", " - ") }}
                     {% endif %}
@@ -51,7 +51,7 @@
             <td>{% if solution.parity %} YES {% else %} NO {% endif %} </td>
             <td>
                 {%- for step, dummy in g.zip(solution.edge_steps, solution.edge_dummy_move ) -%}
-                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step}}</span>
+                    <span {% if dummy %} style="color: grey"  {% endif %} >{{step | user_letter_scheme }}</span>
                     {%- if not loop.last %}
                         {{ loop.cycle("", " - ") }}
                     {% endif %}
@@ -95,7 +95,7 @@
 {% for step, cube, dummy in g.zip(solution.corner_steps, solution.corner_states, solution.corner_dummy_move ) %}
     {{ my_cubechart(cube) }}
     <h3>
-        {{loop.index}}. {{ step }} 
+        {{loop.index}}. {{ step | user_letter_scheme  }} 
     </h3>
     {% if dummy %}
         This is a <strong>"dummy"</strong> move, meaning that multiple possible steps could have been taken at this point. If you wonder why chose this one, read the <a href="/guide#dummy">dummy move selection convention</a> in our guide.
@@ -105,7 +105,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td>Setup position <i>{{ step }}</i> to <i>C</i></td>
+                    <td>Setup position <i>{{ step | user_letter_scheme  }}</i> to <i>C</i></td>
                     <td>
                         <code>
                             {{g.moves_to_human_readable(g.get_setup_moves(step) or []) | join(" ") }}
@@ -155,7 +155,7 @@
 {% for step, cube, dummy in g.zip(solution.edge_steps, solution.edge_states, solution.edge_dummy_move ) %}
     {{ my_cubechart(cube)}}
     <h3>
-        {{loop.index}}. {{ step }} 
+        {{loop.index}}. {{ step | user_letter_scheme  }} 
     </h3>
     
     {% if dummy %}
@@ -167,7 +167,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td>Setup position <i>{{ step }}</i> to <i>d</i></td>
+                    <td>Setup position <i>{{ step | user_letter_scheme  }}</i> to <i>d</i></td>
                     <td>
                         <code>
                             {{g.moves_to_human_readable(g.get_setup_moves(step) or []) | join(" ") }}

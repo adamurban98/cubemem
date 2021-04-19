@@ -31,6 +31,25 @@
         <option value="20" {% if g.get_pref('pref_i_shufflen') == 20 %} selected {% endif %}>20 or 21 moves</option>
         <option value="30" {% if g.get_pref('pref_i_shufflen') == 30 %} selected {% endif %}>30 or 31 moves</option>
     </select>
+
+
+    <h3>Letter scheme</h3>
+    <p>You can see your letter scheme on a 2D and 3D chart in the <a href="/guide#letterscheme">guide</a>.</p>
+    
+    <p>For type 1 letter schemes we traverse the cube faces in the following order: top, left, front, right, back, bottom.</p>
+    <input type="radio" name="pref_s_letterscheme" value="european_1" {% if g.get_pref('pref_s_letterscheme') == 'european_1' %} checked {% endif %}>
+    <label for="">European 1 (default) - ABCD EFGH IJKL MNOP QRST UVXZ - W and Y left out</label>
+    <br>
+    <input type="radio" name="pref_s_letterscheme" value="english_1" {% if g.get_pref('pref_s_letterscheme') == 'english_1' %} checked {% endif %}> 
+    <label for="">English 1 - ABCD EFGH IJKL MNOP QRST UVWY</label>    
+    <br>
+    <p>For type 2 letter schemes we traverse the cube faces in the following order: top, front, right, back, left, bottom.</p>
+    <input type="radio" name="pref_s_letterscheme" value="european_2" {% if g.get_pref('pref_s_letterscheme') == 'european_2' %} checked {% endif %}>
+    <label for="">European 2 - ABCD EFGH IJKL MNOP QRST UVXZ - W and Y left out</label>
+    <br>
+    <input type="radio" name="pref_s_letterscheme" value="english_2" {% if g.get_pref('pref_s_letterscheme') == 'english_2' %} checked {% endif %}> 
+    <label for="">English 2 - ABCD EFGH IJKL MNOP QRST UVWY</label>    
+    <br>
     <br>
     
     <input type="submit" value="Submit">

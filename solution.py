@@ -67,12 +67,13 @@ class Solution:
         return solution
 
     def _mnemonics_pair_helper(self, step_sequence):
+        from letter_scheme import letter_to_user_scheme
         length = len(step_sequence)
         for i in range(length//2):
-            yield step_sequence[i*2] + step_sequence[i*2+1]
+            yield letter_to_user_scheme(step_sequence[i*2]) + letter_to_user_scheme(step_sequence[i*2+1])
 
         if length % 2 == 1:
-            yield step_sequence[-1]
+            yield letter_to_user_scheme(step_sequence[-1])
 
     @property
     def corner_mnemonic_pair_ques(self):

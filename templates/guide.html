@@ -13,7 +13,7 @@
 
 <section>
 
-    <h2>Letter scheme and standard orientation</h2>
+    <h2 id="letterscheme">Letter scheme and standard orientation</h2>
     
     <p>The following letter scheme is used. Letters <i>Y</i> and <i>W</i> were left out.</p>
     <p> Our site assumes that the default orientation of the cube is with white on the top face of the cube and orange on the front face.</p>
@@ -102,7 +102,7 @@
         <tbody>
             {% for position in 'ABCDEFGHIJKLMNOPQRSTUVXZ' %}
             <tr>
-                <td>{{position}}</td>
+                <td>{{position | user_letter_scheme}}</td>
                 {% if position in 'AER' %}
                 <td colspan="2">This position is part of the buffer sticker's piece</td>
                 {% else %}
@@ -125,7 +125,7 @@
         <tbody>
             {% for position in 'abcdefghijklmnopqrstuvxz' %}
             <tr>
-                <td>{{position}}</td>
+                <td>{{position | user_letter_scheme}}</td>
                 {% if position in 'bm' %}
                 <td colspan="2">This position is part of the buffer sticker's piece</td>
                 {% else %}
@@ -165,14 +165,14 @@
     In this case we may chose any of the stickers of the unsolved white-orange-blue corner piece as a dummy. Meaning the following sets of steps will all lead to a solved cube:
     
     <ul>
-        <li><span style="color:grey">D</span> I</li>
-        <li><span style="color:grey">I</span> F</li>
-        <li><span style="color:grey">F</span> D</li>
+        <li><span style="color:grey">{{ "D" | user_letter_scheme }}</span> {{ "I" | user_letter_scheme }}</li>
+        <li><span style="color:grey">{{ "I" | user_letter_scheme }}</span> {{ "F" | user_letter_scheme }}</li>
+        <li><span style="color:grey">{{ "F" | user_letter_scheme }}</span> {{ "D" | user_letter_scheme }}</li>
     </ul>
     
     
     <p>
-        Applying our principle, we chose D as the sticker for the dummy move, which makes following steps unambiguous.  
+        Applying our principle, we chose {{ "D" | user_letter_scheme }} as the sticker for the dummy move, which makes following steps unambiguous.  
     </p>
     
     <p>

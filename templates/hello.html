@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% from 'cubechart.html' import cubechart %}
+{% from 'shuffle_sequence.html' import shuffle_sequence %}
+
+
+{% block body %}
+    hello
+    {{ "a" | user_letter_scheme }}
+    {{ "x" | user_letter_scheme }}
+    {{ "z" | user_letter_scheme }}
+{% endblock %}

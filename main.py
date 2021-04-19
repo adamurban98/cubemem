@@ -10,7 +10,7 @@ from cube_url import cube_from_url_args, cube_to_url_args
 from setup_moves import get_setup_moves, get_reverse_setup_moves
 import os
 from perms import PERM_MOVES
-
+from get_pref import get_pref
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -34,7 +34,6 @@ def robots_txt():
 User-agent: *
 Allow: /
 '''
-
     return Response(robots_txt, mimetype='text/plain')
 
 
@@ -49,21 +48,6 @@ def guide():
 
 @app.before_request
 def before_request():
-
-    defaults = dict(
-        pref_b_dimension=True,
-        pref_s_showletter='hover',
-        pref_i_shufflen=10,
-    )
-
-    def get_pref(key):
-        if key in session:
-            return session[key]
-        elif key in defaults:
-            return defaults[key]
-        else:
-            KeyError(key)
-
     g.get_pref = get_pref
     g.moves_to_human_readable = moves_to_human_readable
     g.cube_from_url_args = cube_from_url_args
@@ -73,6 +57,19 @@ def before_request():
     g.PERM_MOVES = PERM_MOVES
     g.get_setup_moves = get_setup_moves
     g.get_reverse_setup_moves = get_reverse_setup_moves
+
+from letter_scheme import letter_to_user_scheme
+
+
+@app.template_filter()
+def user_letter_scheme(letter):
+    return letter_to_user_scheme(letter)
+
+
+
+@app.route('/hello')
+def hello():
+    return render_template('hello.html')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
