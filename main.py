@@ -48,7 +48,7 @@ def guide():
 
 
 @app.before_request
-def register_get_pref():
+def before_request():
 
     defaults = dict(
         pref_b_dimension=True,
