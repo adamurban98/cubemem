@@ -11,168 +11,175 @@
 
 <p>This page summarizes some conventions concerning the "Old Poachmann" blindfolded cube solving.</p>
 
-<h2>Letter scheme and standard orientation</h2>
+<section>
 
-<p>The following letter scheme is used. Letters <i>Y</i> and <i>W</i> were left out.</p>
-<p> Our site assumes that the default orientation of the cube is with white on the top face of the cube and orange on the front face.</p>
-
-
-<center>
-    {{cubechart_2d(default_cube, size=30, showletter="always")}}
-</center>
-
-<p>When visualizing the cube in 3D, the front (orange) face is to the right by default. You can rotate and tilt the cube using the arrow buttons.</p>
-
-<center>
-    {{cubechart_3d(default_cube, showletter="always")}}
-</center>
-
-<h2>Algorithms used during execution</h2>
-
-To solve the cube blindfolded you only have to remember the 3 algorithms:
-
-<ol>
-    <li>
-        <h3>Corner swapping using Y perm</h3>
-        <p>The Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></p>
-        <p>
-            <ul>
-                <li>The sticker that is intended to be swapped with the buffer sticker has to be moved to position <i>C</i>. The setup moves may not use moves that involve the <code>U B L</code> layers as these would disrupt the buffer sticker or the edge pieces that are temporarily swapped.</li>
-                <li>Then the Y perm is preformed swapping the buffer position <i>A</i> with position <i>C</i> (as a by product also swapping edge stickers <i>a</i> and <i>d</i>).</li>
-                <li>Finally the setup moves need to be undone by their exact reverse.</li>
-            </ul>
-        </p>
-        <p> 
-            Most Old Poachman tutorials actually swap the buffer position <i>A</i> with position <i>P</i> using a slightly modified version of the Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y_OP"]) | join(" ")}}</code>.
-            This is a sensible decision as that position requires on average less complex setup moves and in addition to this the algorithm is shorter. Nevertheless we prefer the regular version, as that is already in the muscle memory of most cube solvers.
-
-        </p>
-    </li>
-    <li>
-        <h3>Fixing parity by R perm</h3>
-        <p>
-            The property of an Old Poachmann solution is that the number of steps necessary to solve the corners and edges always has the same parity.
-            Therefore if the solution requires an odd number of corner swaps, we perform an <i>R perm</i>, which fixes the incorrectly swapped edge pieces of the <i>a</i> and <i>d</i> positions and also swaps the corner pieces of the <i>B</i> and <i>C</i> stickers. This swap is then automatically when an odd number of <i>T perms</i> is performed when solving the edge pieces.
-        </p>
-        <p>
-            The R perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["R"]) | join(" ") }}</code>
-        </p>
-        <p>
-            The <i>R perm</i> can be replaced by a combination of <i>L perm</i> and <i>Y perm</i>:
-            <ul>
-                <li>L perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["MY_L"]) | join(" ")}}</code></li>
-                <li>Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></li>
-            </ul>
-        </p>
-    </li>
-    <li>
-        <h3>Edge swapping using T perm</h3>
-        <p>The T perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["T"]) | join(" ")}}</code></p>
-        <p>
-            <ul>
-                <li>The sticker that is intended to be swapped with the buffer sticker <i>b</i> has to be moved to position <i>d</i>. The setup moves may not use moves that involve the <code>U R</code> layers as these would disrupt the buffer sticker or the corner pieces that are temporarily swapped.</li>
-                <li>Then the T perm is preformed swapping the buffer position <i>b</i> with position <i>c</i> (as a by product also swapping corner stickers <i>B</i> and <i>C</i>).</li>
-                <li>Finally the setup moves need to be undone by their exact reverse.</li>
-            </ul>
-        </p>
-        <p> 
-           For reasons similar to the ones mentioned above,
-           most Old Poachman tutorials actually swap  the buffer position <i>b</i> with position <i>z</i> using a slightly modified version of the T perm:
-           <code>{{g.moves_to_human_readable(g.PERM_MOVES["T_OP"]) | join(" ")}}</code>.
-        </p>
-    </li>
-</ol>
-
-
-<h2>Setup moves</h2>
-
-<h3>Corner setup moves</h3>
-
-<table>
-    <thead>
-        <th>Position</th>
-        <th>Setup moves</th>
-        <th>Reverse setup moves</th>
-    </thead>
-
-    <tbody>
-        {% for position in 'ABCDEFGHIJKLMNOPQRSTUVXZ' %}
+    <h2>Letter scheme and standard orientation</h2>
+    
+    <p>The following letter scheme is used. Letters <i>Y</i> and <i>W</i> were left out.</p>
+    <p> Our site assumes that the default orientation of the cube is with white on the top face of the cube and orange on the front face.</p>
+    
+    
+    <center>
+        {{cubechart_2d(default_cube, size=30, showletter="always")}}
+    </center>
+    
+    <p>When visualizing the cube in 3D, the front (orange) face is to the right by default. You can rotate and tilt the cube using the arrow buttons.</p>
+    
+    <center>
+        {{cubechart_3d(default_cube, showletter="always")}}
+    </center>
+</section>
+<section>
+    <h2>Algorithms used during execution</h2>
+    
+    To solve the cube blindfolded you only have to remember the 3 algorithms:
+    
+    <ol>
+        <li>
+            <h3>Corner swapping using Y perm</h3>
+            <p>The Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></p>
+            <p>
+                <ul>
+                    <li>The sticker that is intended to be swapped with the buffer sticker has to be moved to position <i>C</i>. The setup moves may not use moves that involve the <code>U B L</code> layers as these would disrupt the buffer sticker or the edge pieces that are temporarily swapped.</li>
+                    <li>Then the Y perm is preformed swapping the buffer position <i>A</i> with position <i>C</i> (as a by product also swapping edge stickers <i>a</i> and <i>d</i>).</li>
+                    <li>Finally the setup moves need to be undone by their exact reverse.</li>
+                </ul>
+            </p>
+            <p> 
+                Most Old Poachman tutorials actually swap the buffer position <i>A</i> with position <i>P</i> using a slightly modified version of the Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y_OP"]) | join(" ")}}</code>.
+                This is a sensible decision as that position requires on average less complex setup moves and in addition to this the algorithm is shorter. Nevertheless we prefer the regular version, as that is already in the muscle memory of most cube solvers.
+                
+            </p>
+        </li>
+        <li>
+            <h3>Fixing parity by R perm</h3>
+            <p>
+                The property of an Old Poachmann solution is that the number of steps necessary to solve the corners and edges always has the same parity.
+                Therefore if the solution requires an odd number of corner swaps, we perform an <i>R perm</i>, which fixes the incorrectly swapped edge pieces of the <i>a</i> and <i>d</i> positions and also swaps the corner pieces of the <i>B</i> and <i>C</i> stickers. This swap is then automatically when an odd number of <i>T perms</i> is performed when solving the edge pieces.
+            </p>
+            <p>
+                The R perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["R"]) | join(" ") }}</code>
+            </p>
+            <p>
+                The <i>R perm</i> can be replaced by a combination of <i>L perm</i> and <i>Y perm</i>:
+                <ul>
+                    <li>L perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["MY_L"]) | join(" ")}}</code></li>
+                    <li>Y perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["Y"]) | join(" ")}}</code></li>
+                </ul>
+            </p>
+        </li>
+        <li>
+            <h3>Edge swapping using T perm</h3>
+            <p>The T perm: <code>{{g.moves_to_human_readable(g.PERM_MOVES["T"]) | join(" ")}}</code></p>
+            <p>
+                <ul>
+                    <li>The sticker that is intended to be swapped with the buffer sticker <i>b</i> has to be moved to position <i>d</i>. The setup moves may not use moves that involve the <code>U R</code> layers as these would disrupt the buffer sticker or the corner pieces that are temporarily swapped.</li>
+                    <li>Then the T perm is preformed swapping the buffer position <i>b</i> with position <i>c</i> (as a by product also swapping corner stickers <i>B</i> and <i>C</i>).</li>
+                    <li>Finally the setup moves need to be undone by their exact reverse.</li>
+                </ul>
+            </p>
+            <p> 
+                For reasons similar to the ones mentioned above,
+                most Old Poachman tutorials actually swap  the buffer position <i>b</i> with position <i>z</i> using a slightly modified version of the T perm:
+                <code>{{g.moves_to_human_readable(g.PERM_MOVES["T_OP"]) | join(" ")}}</code>.
+            </p>
+        </li>
+    </ol>
+</section>
+    
+<section>
+    <h2>Setup moves</h2>
+    
+    <h3>Corner setup moves</h3>
+    
+    <table>
+        <thead>
+            <th>Position</th>
+            <th>Setup moves</th>
+            <th>Reverse setup moves</th>
+        </thead>
+        
+        <tbody>
+            {% for position in 'ABCDEFGHIJKLMNOPQRSTUVXZ' %}
             <tr>
                 <td>{{position}}</td>
                 {% if position in 'AER' %}
-                    <td colspan="2">This position is part of the buffer sticker's piece</td>
+                <td colspan="2">This position is part of the buffer sticker's piece</td>
                 {% else %}
-                    <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
-                    <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
+                <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
+                <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
                 {% endif %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h3>Edge setup moves</h3>
-
-<table>
-    <thead>
-        <th>Position</th>
-        <th>Setup moves</th>
-        <th>Reverse setup moves</th>
-    </thead>
-    <tbody>
-        {% for position in 'abcdefghijklmnopqrstuvxz' %}
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Edge setup moves</h3>
+    
+    <table>
+        <thead>
+            <th>Position</th>
+            <th>Setup moves</th>
+            <th>Reverse setup moves</th>
+        </thead>
+        <tbody>
+            {% for position in 'abcdefghijklmnopqrstuvxz' %}
             <tr>
                 <td>{{position}}</td>
                 {% if position in 'bm' %}
-                    <td colspan="2">This position is part of the buffer sticker's piece</td>
+                <td colspan="2">This position is part of the buffer sticker's piece</td>
                 {% else %}
-                    <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
-                    <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
+                <td><code>{{g.moves_to_human_readable(g.get_setup_moves(position) or []) | join(" ") }}</code></td>
+                <td><code>{{g.moves_to_human_readable(g.get_reverse_setup_moves(position) or []) | join(" ") }}</code></td>
                 {% endif %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 
-<h2 id="dummy">Dummy move selection convention</h2>
-<p>
-    When solving the cube using the Old Poachmann method it happens that the buffer piece gets back to the buffer position (or may even be there at the beginning of the solve) before all the other pieces are solved.
-    In a situation like this, we have to select an unsolved piece, pick one of it's stickers and perform a swap of that sticker with the buffer.
-    We call this move a <strong>"dummy"</strong> move as it does not solve any edge or corner piece in that step. The problem is that there are more than one possibilities for this choice, meaning that <i>there may be many possible Olc Poachmann style solutions for any given cube state.</i>
-</p>
-<p>
-    Now, to make our website usefull for learning the Old Poachmann method we need to introduce a convention that eliminates this ambiguity and thus guarantees a unique Old Poachmann solution for each cube state.
-</p>
-<p>
-    This convention is as follows: 
-    Whenever there are is more then one unsolved sticker position in a situation when the buffer piece is in the buffer position, we opt for a "dummy" sticker that comes first in the letter scheme.  
-
-</p>
-
-<h3>Example for dummy move selection</h3>
-
-Let us see the aforementioned principle in practice. In this cube there are exactly two unsolved pieces: the white-blue-red corner buffer that happens to be in an incorrect orientation in its position; and the white-orange-blue corner, which similarly is in its correct position but in an incorrect orientation:
-
-<center>
-    {{ cubechart(cube=example_cube_for_dummy_selection,size=30, showletter='always') }}
-</center>
-
-In this case we may chose any of the stickers of the unsolved white-orange-blue corner piece as a dummy. Meaning the following sets of steps will all lead to a solved cube:
-
-<ul>
-    <li><span style="color:grey">D</span> I</li>
-    <li><span style="color:grey">I</span> F</li>
-    <li><span style="color:grey">F</span> D</li>
-</ul>
-
-
-<p>
-    Applying our principle, we chose D as the sticker for the dummy move, which makes following steps unambiguous.  
-</p>
-
-<p>
-    Should it happen that the buffer piece gets back prematurely to its position again (not in this example) we simply repeat this selection procedure.
-</p>
-
+<section>
+    <h2 id="dummy">Dummy move selection convention</h2>
+    <p>
+        When solving the cube using the Old Poachmann method it happens that the buffer piece gets back to the buffer position (or may even be there at the beginning of the solve) before all the other pieces are solved.
+        In a situation like this, we have to select an unsolved piece, pick one of it's stickers and perform a swap of that sticker with the buffer.
+        We call this move a <strong>"dummy"</strong> move as it does not solve any edge or corner piece in that step. The problem is that there are more than one possibilities for this choice, meaning that <i>there may be many possible Olc Poachmann style solutions for any given cube state.</i>
+    </p>
+    <p>
+        Now, to make our website usefull for learning the Old Poachmann method we need to introduce a convention that eliminates this ambiguity and thus guarantees a unique Old Poachmann solution for each cube state.
+    </p>
+    <p>
+        This convention is as follows: 
+        Whenever there are is more then one unsolved sticker position in a situation when the buffer piece is in the buffer position, we opt for a "dummy" sticker that comes first in the letter scheme.  
+        
+    </p>
+    
+    <h3>Example for dummy move selection</h3>
+    
+    Let us see the aforementioned principle in practice. In this cube there are exactly two unsolved pieces: the white-blue-red corner buffer that happens to be in an incorrect orientation in its position; and the white-orange-blue corner, which similarly is in its correct position but in an incorrect orientation:
+    
+    <center>
+        {{ cubechart(cube=example_cube_for_dummy_selection,size=30, showletter='always') }}
+    </center>
+    
+    In this case we may chose any of the stickers of the unsolved white-orange-blue corner piece as a dummy. Meaning the following sets of steps will all lead to a solved cube:
+    
+    <ul>
+        <li><span style="color:grey">D</span> I</li>
+        <li><span style="color:grey">I</span> F</li>
+        <li><span style="color:grey">F</span> D</li>
+    </ul>
+    
+    
+    <p>
+        Applying our principle, we chose D as the sticker for the dummy move, which makes following steps unambiguous.  
+    </p>
+    
+    <p>
+        Should it happen that the buffer piece gets back prematurely to its position again (not in this example) we simply repeat this selection procedure.
+    </p>
+</section>
+    
 {% include 'footer.html' %}
-
-{% endblock %}
+    
+s{% endblock %}
