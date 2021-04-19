@@ -16,6 +16,9 @@ Try it here: [cubemem.adamurban.net 🌍](https://cubemem.adamurban.net/)
 - [ ] rotate the sticker label in 3d view on the top and bottom cube face
 - [ ] normalize cube codes (rare)
 
+## Bugs
+
+- When preference for 2d cube is set in the guide, the 3d cube does not respect the "always" option for sticker labels.
 
 ## Testing
 - To test: `pytest`
